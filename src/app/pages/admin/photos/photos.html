@@ -1,0 +1,265 @@
+<div class="admin-page">
+
+  <!-- HEADER -->
+  <header class="admin-header">
+    <div>
+      <p class="eyebrow">LGMI BALBALUNGAO</p>
+
+      <h1>Photo Submissions</h1>
+
+      <p class="header-description">
+        Review photos submitted for the
+        35th Anniversary celebration.
+      </p>
+    </div>
+
+    <button
+      class="refresh-button"
+      type="button"
+      (click)="loadPhotos()"
+      [disabled]="isLoading()"
+    >
+      ↻ Refresh
+    </button>
+  </header>
+
+
+  <!-- MESSAGES -->
+
+  @if (successMessage()) {
+    <div class="alert success">
+      ✓ {{ successMessage() }}
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <div class="alert error">
+      ⚠ {{ errorMessage() }}
+    </div>
+  }
+
+
+  <!-- FILTERS -->
+
+  <section class="filter-section">
+
+    <button
+      type="button"
+      class="filter-button"
+      [class.active]="selectedFilter() === 'all'"
+      (click)="setFilter('all')"
+    >
+      All
+      <span>{{ getCount('all') }}</span>
+    </button>
+
+    <button
+      type="button"
+      class="filter-button"
+      [class.active]="selectedFilter() === 'pending'"
+      (click)="setFilter('pending')"
+    >
+      Pending
+      <span>{{ getCount('pending') }}</span>
+    </button>
+
+    <button
+      type="button"
+      class="filter-button"
+      [class.active]="selectedFilter() === 'approved'"
+      (click)="setFilter('approved')"
+    >
+      Approved
+      <span>{{ getCount('approved') }}</span>
+    </button>
+
+    <button
+      type="button"
+      class="filter-button"
+      [class.active]="selectedFilter() === 'rejected'"
+      (click)="setFilter('rejected')"
+    >
+      Rejected
+      <span>{{ getCount('rejected') }}</span>
+    </button>
+
+  </section>
+
+
+  <!-- LOADING -->
+
+  @if (isLoading()) {
+
+    <div class="loading-state">
+
+      <div class="spinner"></div>
+
+      <p>
+        Loading submitted photos...
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- EMPTY -->
+
+  @else if (filteredPhotos().length === 0) {
+
+    <div class="empty-state">
+
+      <div class="empty-icon">
+        📷
+      </div>
+
+      <h2>No photos found</h2>
+
+      <p>
+        There are no photos in this category yet.
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- PHOTO GRID -->
+
+  @else {
+
+    <section class="photo-grid">
+
+      @for (
+        photo of filteredPhotos();
+        track photo.id
+      ) {
+
+        <article class="photo-card">
+
+          <!-- IMAGE -->
+
+          <div class="photo-preview">
+
+            @if (photo.previewUrl) {
+
+              <img
+                [src]="photo.previewUrl"
+                [alt]="photo.caption || 'Submitted church photo'"
+              />
+
+            } @else {
+
+              <div class="image-error">
+                <span>📷</span>
+                <p>
+                  Preview unavailable
+                </p>
+              </div>
+
+            }
+
+            <div
+              class="status-badge"
+              [class.pending]="photo.status === 'pending'"
+              [class.approved]="photo.status === 'approved'"
+              [class.rejected]="photo.status === 'rejected'"
+            >
+              {{ photo.status }}
+            </div>
+
+          </div>
+
+
+          <!-- CONTENT -->
+
+          <div class="photo-content">
+
+            <div class="photo-author">
+
+              <div class="avatar">
+                {{ displayName(photo).charAt(0).toUpperCase() }}
+              </div>
+
+              <div>
+
+                <strong>
+                  {{ displayName(photo) }}
+                </strong>
+
+                <span>
+                  {{ formatDate(photo.created_at) }}
+                </span>
+
+              </div>
+
+            </div>
+
+
+            @if (photo.caption) {
+
+              <p class="caption">
+                "{{ photo.caption }}"
+              </p>
+
+            }
+
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+
+              @if (photo.status !== 'approved') {
+
+                <button
+                  type="button"
+                  class="approve-button"
+                  [disabled]="isUpdating() === photo.id"
+                  (click)="updateStatus(photo.id, 'approved')"
+                >
+                  @if (isUpdating() === photo.id) {
+                    Processing...
+                  } @else {
+                    ✓ Approve
+                  }
+                </button>
+
+              }
+
+
+              @if (photo.status !== 'rejected') {
+
+                <button
+                  type="button"
+                  class="reject-button"
+                  [disabled]="isUpdating() === photo.id"
+                  (click)="updateStatus(photo.id, 'rejected')"
+                >
+                  ✕ Reject
+                </button>
+
+              }
+
+
+              <button
+                type="button"
+                class="delete-button"
+                [disabled]="isUpdating() === photo.id"
+                (click)="deletePhoto(photo.id)"
+              >
+                🗑 Delete
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      }
+
+    </section>
+
+  }
+
+</div>

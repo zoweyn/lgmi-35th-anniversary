@@ -1,0 +1,379 @@
+<div class="messages-page">
+
+  <!-- NAVBAR -->
+
+  <header class="navbar">
+
+    <a
+      routerLink="/"
+      class="brand"
+    >
+      <div class="brand-mark">
+        LGMI
+      </div>
+
+      <div class="brand-text">
+        <strong>LGMI Balbalungao</strong>
+        <span>35th Anniversary</span>
+      </div>
+    </a>
+
+
+    <nav>
+
+      <a
+        routerLink="/"
+      >
+        Home
+      </a>
+
+      <a
+        routerLink="/story"
+      >
+        Our Story
+      </a>
+
+      <a
+        routerLink="/memories"
+      >
+        Memories
+      </a>
+
+      <a
+        routerLink="/photos"
+      >
+        Photos
+      </a>
+
+      <a
+        routerLink="/messages"
+        class="active"
+      >
+        Messages
+      </a>
+
+    </nav>
+
+  </header>
+
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <p class="eyebrow">
+        A MESSAGE TO OUR CHURCH
+      </p>
+
+      <h1>
+        Words From the Heart
+      </h1>
+
+      <p>
+        Share a message, prayer, greeting,
+        or thanksgiving as we celebrate
+        35 years of God's faithfulness.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- FORM -->
+
+  <main class="content">
+
+    <section class="message-form-section">
+
+      <div class="section-heading">
+
+        <p class="section-eyebrow">
+          LEAVE A MESSAGE
+        </p>
+
+        <h2>
+          What would you like to say
+          to LGMI Balbalungao?
+        </h2>
+
+        <p>
+          Your message will be reviewed by
+          the church administrator before
+          appearing publicly.
+        </p>
+
+      </div>
+
+
+      <form
+        class="message-form"
+        (ngSubmit)="submitMessage()"
+      >
+
+        <!-- NAME -->
+
+        <div class="field">
+
+          <div class="field-label">
+
+            <label for="name">
+              Your Name
+            </label>
+
+            <span>
+              OPTIONAL
+            </span>
+
+          </div>
+
+          <input
+            id="name"
+            name="name"
+            type="text"
+            [(ngModel)]="name"
+            placeholder="Enter your name"
+            maxlength="100"
+          />
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <div class="field">
+
+          <div class="field-label">
+
+            <label for="message">
+              Your Message
+            </label>
+
+            <span>
+              REQUIRED
+            </span>
+
+          </div>
+
+          <textarea
+            id="message"
+            name="message"
+            [(ngModel)]="message"
+            placeholder="Write your message to the church..."
+            maxlength="1000"
+            rows="7"
+            required
+          ></textarea>
+
+          <small>
+            {{ message.length }}/1000
+          </small>
+
+        </div>
+
+
+        <!-- ANONYMOUS -->
+
+        <label class="anonymous-option">
+
+          <input
+            type="checkbox"
+            name="isAnonymous"
+            [(ngModel)]="isAnonymous"
+          />
+
+          <span class="checkbox-text">
+
+            <strong>
+              Keep my name anonymous
+            </strong>
+
+            <small>
+              Your name will not be displayed publicly.
+            </small>
+
+          </span>
+
+        </label>
+
+
+        <!-- SUCCESS -->
+
+        @if (successMessage()) {
+
+          <div class="alert success">
+            ✓ {{ successMessage() }}
+          </div>
+
+        }
+
+
+        <!-- ERROR -->
+
+        @if (errorMessage()) {
+
+          <div class="alert error">
+            ⚠ {{ errorMessage() }}
+          </div>
+
+        }
+
+
+        <!-- SUBMIT -->
+
+        <button
+          type="submit"
+          class="submit-button"
+          [disabled]="isSubmitting()"
+        >
+
+          @if (isSubmitting()) {
+
+            Submitting...
+
+          } @else {
+
+            Send Message
+            <span>→</span>
+
+          }
+
+        </button>
+
+      </form>
+
+    </section>
+
+
+    <!-- APPROVED MESSAGES -->
+
+    <section class="messages-section">
+
+      <div class="section-heading centered">
+
+        <p class="section-eyebrow">
+          FROM OUR COMMUNITY
+        </p>
+
+        <h2>
+          Messages We Hold Dear
+        </h2>
+
+        <p>
+          Words of gratitude, encouragement,
+          and love from our church family.
+        </p>
+
+      </div>
+
+
+      @if (isLoadingMessages()) {
+
+        <div class="loading">
+
+          <div class="spinner"></div>
+
+          <p>
+            Loading messages...
+          </p>
+
+        </div>
+
+      }
+
+      @else if (
+        approvedMessages().length === 0
+      ) {
+
+        <div class="empty">
+
+          <div class="empty-icon">
+            ✉
+          </div>
+
+          <h3>
+            No messages yet
+          </h3>
+
+          <p>
+            Be the first to share a message
+            with our church family.
+          </p>
+
+        </div>
+
+      }
+
+      @else {
+
+        <div class="message-grid">
+
+          @for (
+            item of approvedMessages();
+            track item.id
+          ) {
+
+            <article class="message-card">
+
+              <div class="quote-mark">
+                “
+              </div>
+
+              <p class="message-text">
+                {{ item.message }}
+              </p>
+
+              <div class="message-author">
+
+                <div class="author-avatar">
+                  {{
+                    displayName(item)
+                      .charAt(0)
+                      .toUpperCase()
+                  }}
+                </div>
+
+                <div>
+
+                  <strong>
+                    {{ displayName(item) }}
+                  </strong>
+
+                  <span>
+                    {{ formatDate(item.created_at) }}
+                  </span>
+
+                </div>
+
+              </div>
+
+            </article>
+
+          }
+
+        </div>
+
+      }
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer class="footer">
+
+    <p>
+      LGMI Balbalungao · 35th Anniversary
+    </p>
+
+    <span>
+      November 22, 2026 · 8:00 AM
+    </span>
+
+  </footer>
+
+</div>

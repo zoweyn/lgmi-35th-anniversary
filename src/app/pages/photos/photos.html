@@ -1,0 +1,462 @@
+<div class="photos-page">
+
+  <!-- ==========================================
+       NAVIGATION
+  =========================================== -->
+
+  <nav class="navbar">
+
+    <div class="nav-container">
+
+      <a
+        routerLink="/"
+        class="logo"
+      >
+        <span class="logo-cross">✝</span>
+
+        <span>
+          LGMI
+          <small>Balbalungao</small>
+        </span>
+      </a>
+
+
+      <div class="nav-links">
+
+        <a routerLink="/">
+          Home
+        </a>
+
+        <a routerLink="/story">
+          Our Story
+        </a>
+
+        <a routerLink="/memories">
+          Memories
+        </a>
+
+        <a
+          routerLink="/photos"
+          class="active"
+        >
+          Photos
+        </a>
+
+        <a routerLink="/messages">
+          Messages
+        </a>
+
+      </div>
+
+    </div>
+
+  </nav>
+
+
+  <!-- ==========================================
+       HERO
+  =========================================== -->
+
+  <section class="hero">
+
+    <span class="eyebrow">
+      CAPTURED MOMENTS
+    </span>
+
+    <h1>
+      Share a
+      <span>favorite photo</span>
+      with our church family.
+    </h1>
+
+    <p>
+      Help us remember the people, places,
+      celebrations, and moments that became
+      part of LGMI Balbalungao's journey.
+    </p>
+
+  </section>
+
+
+  <!-- ==========================================
+       UPLOAD FORM
+  =========================================== -->
+
+  <section class="upload-section">
+
+    <div class="form-card">
+
+      @if (!uploaded()) {
+
+        <div class="form-header">
+
+          <span class="section-label">
+            SHARE A PHOTO
+          </span>
+
+          <h2>
+            Add a favorite moment
+          </h2>
+
+          <p>
+            Photos are reviewed by our church
+            administrator before appearing publicly.
+          </p>
+
+        </div>
+
+
+        <form
+          (ngSubmit)="uploadPhoto()"
+        >
+
+          <!-- PHOTO -->
+
+          <div class="form-group">
+
+            <label for="photo">
+              Choose Photo
+            </label>
+
+            <input
+              id="photo"
+              type="file"
+              accept="image/*"
+              (change)="onFileSelected($event)"
+              [disabled]="isUploading()"
+            />
+
+            <small>
+              JPG, PNG, WEBP or other image formats.
+              Maximum 10 MB.
+            </small>
+
+          </div>
+
+
+          <!-- NAME -->
+
+          <div class="form-group">
+
+            <div class="label-row">
+
+              <label for="name">
+                Your Name
+              </label>
+
+              <span>
+                OPTIONAL
+              </span>
+
+            </div>
+
+            <input
+              id="name"
+              type="text"
+              name="name"
+              [(ngModel)]="name"
+              placeholder="Enter your name"
+              [disabled]="isUploading()"
+            />
+
+          </div>
+
+
+          <!-- CAPTION -->
+
+          <div class="form-group">
+
+            <div class="label-row">
+
+              <label for="caption">
+                Caption
+              </label>
+
+              <span>
+                OPTIONAL
+              </span>
+
+            </div>
+
+            <textarea
+              id="caption"
+              name="caption"
+              [(ngModel)]="caption"
+              rows="4"
+              placeholder="Tell us about this moment..."
+              [disabled]="isUploading()"
+            ></textarea>
+
+          </div>
+
+
+          <!-- ANONYMOUS -->
+
+          <label class="anonymous-option">
+
+            <input
+              type="checkbox"
+              name="isAnonymous"
+              [(ngModel)]="isAnonymous"
+              [disabled]="isUploading()"
+            />
+
+            <span>
+
+              <strong>
+                Keep my name anonymous
+              </strong>
+
+              <small>
+                Your name will not be displayed publicly.
+              </small>
+
+            </span>
+
+          </label>
+
+
+          <!-- ERROR -->
+
+          @if (errorMessage()) {
+
+            <div class="error-message">
+              ⚠ {{ errorMessage() }}
+            </div>
+
+          }
+
+
+          <!-- BUTTON -->
+
+          <button
+            type="submit"
+            class="submit-button"
+            [disabled]="isUploading()"
+          >
+
+            @if (isUploading()) {
+
+              <span class="spinner"></span>
+
+              Uploading...
+
+            } @else {
+
+              Upload Photo
+              <span>→</span>
+
+            }
+
+          </button>
+
+          <p class="note">
+            Your photo will remain private until approved.
+          </p>
+
+        </form>
+
+
+      } @else {
+
+        <!-- SUCCESS -->
+
+        <div class="success-state">
+
+          <div class="success-icon">
+            ✓
+          </div>
+
+          <span class="section-label">
+            PHOTO RECEIVED
+          </span>
+
+          <h2>
+            Thank you for sharing!
+          </h2>
+
+          <p>
+            Your photo has been securely submitted
+            for review.
+          </p>
+
+          <p>
+            Once approved, it may appear in our
+            anniversary photo gallery.
+          </p>
+
+          <button
+            type="button"
+            class="another-button"
+            (click)="uploadAnother()"
+          >
+            Upload Another Photo
+          </button>
+
+        </div>
+
+      }
+
+    </div>
+
+  </section>
+
+
+  <!-- ==========================================
+       PUBLIC GALLERY
+  =========================================== -->
+
+  <section class="gallery-section">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        FROM OUR CHURCH FAMILY
+      </span>
+
+      <h2>
+        Moments We Remember
+      </h2>
+
+      <p>
+        A collection of memories captured through
+        the years of God's faithfulness.
+      </p>
+
+    </div>
+
+
+    @if (isLoadingPhotos()) {
+
+      <div class="loading">
+        <div class="spinner dark"></div>
+
+        <p>
+          Loading photos...
+        </p>
+      </div>
+
+    }
+
+
+    @if (
+      !isLoadingPhotos() &&
+      approvedPhotos().length === 0
+    ) {
+
+      <div class="empty-gallery">
+
+        <div class="empty-icon">
+          ♡
+        </div>
+
+        <h3>
+          The gallery is waiting for memories.
+        </h3>
+
+        <p>
+          Be one of the first to share a photo
+          with our church family.
+        </p>
+
+      </div>
+
+    }
+
+
+    @if (
+      !isLoadingPhotos() &&
+      approvedPhotos().length > 0
+    ) {
+
+      <div class="photo-grid">
+
+        @for (
+          photo of approvedPhotos();
+          track photo.id
+        ) {
+
+          <article class="photo-card">
+
+            @if (photo.signedUrl) {
+
+              <img
+                [src]="photo.signedUrl"
+                [alt]="
+                  photo.caption ||
+                  'LGMI Balbalungao anniversary photo'
+                "
+              />
+
+            }
+
+            <div class="photo-info">
+
+              <p>
+                {{
+                  photo.caption ||
+                  'A cherished moment with our church family.'
+                }}
+              </p>
+
+              <span>
+                {{
+                  photo.is_anonymous
+                    ? 'Anonymous'
+                    : (photo.name || 'Church Family')
+                }}
+              </span>
+
+            </div>
+
+          </article>
+
+        }
+
+      </div>
+
+    }
+
+  </section>
+
+
+  <!-- ==========================================
+       CLOSING
+  =========================================== -->
+
+  <section class="closing-section">
+
+    <span>✝</span>
+
+    <h2>
+      35 Years of God's Faithfulness
+    </h2>
+
+    <p>
+      Every photograph tells a part of our story.
+    </p>
+
+    <strong>
+      November 22, 2026 · 8:00 AM
+    </strong>
+
+  </section>
+
+
+  <footer class="footer">
+
+    <div>
+      <strong>LGMI Balbalungao</strong>
+
+      <span>
+        Celebrating 35 Years of God's Faithfulness
+      </span>
+    </div>
+
+    <span>
+      © 2026 LGMI Balbalungao
+    </span>
+
+  </footer>
+
+</div>

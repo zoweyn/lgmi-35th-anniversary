@@ -1,0 +1,91 @@
+<div class="admin-page">
+
+  <div class="login-card">
+
+    <div class="logo-area">
+      <div class="church-icon">✝</div>
+
+      <h1>LGMI Balbalungao</h1>
+
+      <p class="anniversary">
+        35th Anniversary
+      </p>
+    </div>
+
+    <div class="login-header">
+      <h2>Admin Portal</h2>
+
+      <p>
+        Sign in to manage anniversary submissions.
+      </p>
+    </div>
+
+    <form (ngSubmit)="login()">
+
+      <div class="form-group">
+
+        <label for="email">
+          Email Address
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter admin email"
+          autocomplete="email"
+          [disabled]="isLoading()"
+        />
+
+      </div>
+
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Enter password"
+          autocomplete="current-password"
+          [disabled]="isLoading()"
+        />
+
+      </div>
+
+      @if (errorMessage()) {
+        <div class="error-message">
+          {{ errorMessage() }}
+        </div>
+      }
+
+      <button
+        type="submit"
+        class="login-button"
+        [disabled]="isLoading()"
+      >
+
+        @if (isLoading()) {
+          <span>Signing in...</span>
+        } @else {
+          <span>Sign In</span>
+        }
+
+      </button>
+
+    </form>
+
+    <div class="back-link">
+      <a routerLink="/home">
+        ← Back to website
+      </a>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,667 @@
+:host {
+  display: block;
+}
+
+.dashboard-page {
+  min-height: 100vh;
+  display: flex;
+
+  background: #f5f7fa;
+  color: #243b53;
+}
+
+
+/* SIDEBAR */
+
+.sidebar {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  width: 250px;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #173f6e;
+  color: white;
+
+  padding: 24px 16px;
+
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 4px 8px 28px;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.12);
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.14);
+
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.brand strong {
+  display: block;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.brand span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 10px;
+}
+
+
+/* NAVIGATION */
+
+.navigation {
+  padding-top: 25px;
+}
+
+.nav-label {
+  margin: 0 10px 9px;
+
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  position: relative;
+
+  margin-bottom: 4px;
+
+  padding: 11px 12px;
+
+  border-radius: 8px;
+
+  color: rgba(255, 255, 255, 0.72);
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+
+  color: white;
+}
+
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.15);
+
+  color: white;
+}
+
+.nav-icon {
+  width: 18px;
+
+  text-align: center;
+
+  font-size: 16px;
+}
+
+.nav-badge {
+  margin-left: auto;
+
+  min-width: 20px;
+  height: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+
+  background: #e3a53c;
+  color: white;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+/* SIDEBAR BOTTOM */
+
+.sidebar-bottom {
+  margin-top: auto;
+
+  padding-top: 18px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.12);
+}
+
+.view-site,
+.logout-button {
+  width: 100%;
+
+  display: block;
+
+  padding: 10px 12px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: rgba(255, 255, 255, 0.68);
+
+  text-align: left;
+  text-decoration: none;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.view-site:hover,
+.logout-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+
+  color: white;
+}
+
+.logout-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* MAIN */
+
+.main-content {
+  width: calc(100% - 250px);
+
+  margin-left: 250px;
+
+  padding: 38px 42px;
+
+  min-height: 100vh;
+}
+
+
+/* TOPBAR */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  margin-bottom: 32px;
+}
+
+.eyebrow {
+  margin: 0 0 7px;
+
+  color: #527397;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+}
+
+.topbar h1 {
+  margin: 0;
+
+  color: #173f6e;
+
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.subtitle {
+  margin: 7px 0 0;
+
+  color: #8190a3;
+
+  font-size: 13px;
+}
+
+.admin-avatar {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #e6edf5;
+  color: #173f6e;
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+
+/* STATS */
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 16px;
+
+  margin-bottom: 38px;
+}
+
+.stat-card {
+  min-height: 125px;
+
+  display: flex;
+  align-items: center;
+
+  position: relative;
+
+  gap: 14px;
+
+  padding: 20px;
+
+  background: white;
+
+  border: 1px solid #e5eaf0;
+  border-radius: 13px;
+
+  color: inherit;
+  text-decoration: none;
+
+  box-shadow:
+    0 4px 15px rgba(20, 50, 80, 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 9px 24px rgba(20, 50, 80, 0.08);
+}
+
+.stat-icon {
+  width: 44px;
+  height: 44px;
+
+  flex: 0 0 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.memory-icon {
+  background: #f4eafb;
+  color: #814aa5;
+}
+
+.photo-icon {
+  background: #e8f0fa;
+  color: #37699a;
+}
+
+.message-icon {
+  background: #e8f6ed;
+  color: #3b8158;
+}
+
+.pending-icon {
+  background: #fff2df;
+  color: #b56d18;
+}
+
+.stat-info {
+  min-width: 0;
+}
+
+.stat-info span {
+  display: block;
+
+  color: #8997a8;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.stat-info strong {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #203d5c;
+
+  font-size: 26px;
+  line-height: 1;
+}
+
+.card-arrow {
+  position: absolute;
+
+  right: 17px;
+  bottom: 15px;
+
+  color: #a1adbb;
+
+  font-size: 14px;
+}
+
+
+/* SECTION */
+
+.section {
+  margin-bottom: 30px;
+}
+
+.section-heading {
+  margin-bottom: 15px;
+}
+
+.section-heading h2 {
+  margin: 0;
+
+  color: #294765;
+
+  font-size: 18px;
+}
+
+.section-heading p {
+  margin: 5px 0 0;
+
+  color: #8996a6;
+
+  font-size: 12px;
+}
+
+
+/* QUICK ACTIONS */
+
+.quick-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 15px;
+}
+
+.quick-card {
+  display: grid;
+
+  grid-template-columns: auto 1fr auto;
+
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 18px;
+
+  background: white;
+
+  border: 1px solid #e5eaf0;
+  border-radius: 13px;
+
+  color: inherit;
+  text-decoration: none;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.quick-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px rgba(20, 50, 80, 0.07);
+}
+
+.quick-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #eef3f8;
+  color: #315d86;
+
+  font-size: 16px;
+}
+
+.quick-card h3 {
+  margin: 0;
+
+  color: #294765;
+
+  font-size: 13px;
+}
+
+.quick-card p {
+  margin: 5px 0 0;
+
+  color: #8a97a7;
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.quick-card > span {
+  color: #8d9aaa;
+
+  font-size: 16px;
+}
+
+
+/* ANNIVERSARY */
+
+.anniversary-card {
+  min-height: 130px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  overflow: hidden;
+
+  position: relative;
+
+  padding: 25px 30px;
+
+  background: #173f6e;
+
+  border-radius: 15px;
+
+  color: white;
+}
+
+.anniversary-label {
+  margin: 0 0 7px;
+
+  color: rgba(255, 255, 255, 0.55);
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+}
+
+.anniversary-card h2 {
+  margin: 0;
+
+  font-size: 21px;
+}
+
+.anniversary-card p:last-child {
+  margin: 7px 0 0;
+
+  color: rgba(255, 255, 255, 0.68);
+
+  font-size: 12px;
+}
+
+.anniversary-mark {
+  width: 90px;
+  height: 90px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+
+  color: rgba(255, 255, 255, 0.85);
+
+  font-size: 30px;
+  font-weight: 900;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+
+  .stats-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .quick-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 760px) {
+
+  .sidebar {
+    position: static;
+
+    width: 100%;
+    min-height: auto;
+
+    padding: 18px;
+  }
+
+  .dashboard-page {
+    display: block;
+  }
+
+  .navigation {
+    display: flex;
+
+    gap: 5px;
+
+    overflow-x: auto;
+
+    padding-top: 18px;
+  }
+
+  .nav-label {
+    display: none;
+  }
+
+  .nav-item {
+    flex: 0 0 auto;
+  }
+
+  .sidebar-bottom {
+    display: flex;
+
+    gap: 5px;
+
+    margin-top: 10px;
+
+    padding-top: 10px;
+  }
+
+  .main-content {
+    width: 100%;
+
+    margin-left: 0;
+
+    padding: 25px 16px;
+  }
+
+  .topbar h1 {
+    font-size: 27px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .anniversary-card {
+    padding: 22px;
+
+  }
+
+  .anniversary-mark {
+    width: 65px;
+    height: 65px;
+
+    font-size: 23px;
+  }
+
+}

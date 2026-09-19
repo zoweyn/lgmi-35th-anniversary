@@ -1,0 +1,281 @@
+<div class="admin-page">
+
+  <!-- HEADER -->
+
+  <header class="admin-header">
+
+    <div>
+
+      <p class="eyebrow">
+        LGMI BALBALUNGAO
+      </p>
+
+      <h1>
+        Church Messages
+      </h1>
+
+      <p class="header-description">
+        Review messages and greetings submitted
+        by the church community.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="refresh-button"
+      (click)="loadMessages()"
+      [disabled]="isLoading()"
+    >
+      ↻ Refresh
+    </button>
+
+  </header>
+
+
+  <!-- ALERTS -->
+
+  @if (successMessage()) {
+
+    <div class="alert success">
+      ✓ {{ successMessage() }}
+    </div>
+
+  }
+
+
+  @if (errorMessage()) {
+
+    <div class="alert error">
+      ⚠ {{ errorMessage() }}
+    </div>
+
+  }
+
+
+  <!-- FILTERS -->
+
+  <section class="filters">
+
+    <button
+      type="button"
+      class="filter-button"
+      [class.active]="selectedFilter() === 'all'"
+      (click)="setFilter('all')"
+    >
+      All
+      <span>
+        {{ getCount('all') }}
+      </span>
+    </button>
+
+
+    <button
+      type="button"
+      class="filter-button"
+      [class.active]="selectedFilter() === 'pending'"
+      (click)="setFilter('pending')"
+    >
+      Pending
+      <span>
+        {{ getCount('pending') }}
+      </span>
+    </button>
+
+
+    <button
+      type="button"
+      class="filter-button"
+      [class.active]="selectedFilter() === 'approved'"
+      (click)="setFilter('approved')"
+    >
+      Approved
+      <span>
+        {{ getCount('approved') }}
+      </span>
+    </button>
+
+
+    <button
+      type="button"
+      class="filter-button"
+      [class.active]="selectedFilter() === 'rejected'"
+      (click)="setFilter('rejected')"
+    >
+      Rejected
+      <span>
+        {{ getCount('rejected') }}
+      </span>
+    </button>
+
+  </section>
+
+
+  <!-- LOADING -->
+
+  @if (isLoading()) {
+
+    <div class="loading">
+
+      <div class="spinner"></div>
+
+      <p>
+        Loading messages...
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- EMPTY -->
+
+  @else if (
+    filteredMessages().length === 0
+  ) {
+
+    <div class="empty">
+
+      <div class="empty-icon">
+        ✉
+      </div>
+
+      <h2>
+        No messages found
+      </h2>
+
+      <p>
+        There are no messages in this category yet.
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- MESSAGE LIST -->
+
+  @else {
+
+    <section class="message-list">
+
+      @for (
+        item of filteredMessages();
+        track item.id
+      ) {
+
+        <article class="message-card">
+
+          <div class="message-top">
+
+            <div class="author">
+
+              <div class="avatar">
+                {{
+                  displayName(item)
+                    .charAt(0)
+                    .toUpperCase()
+                }}
+              </div>
+
+              <div>
+
+                <strong>
+                  {{ displayName(item) }}
+                </strong>
+
+                <span>
+                  {{ formatDate(item.created_at) }}
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <span
+              class="status"
+              [class.pending]="item.status === 'pending'"
+              [class.approved]="item.status === 'approved'"
+              [class.rejected]="item.status === 'rejected'"
+            >
+              {{ item.status }}
+            </span>
+
+          </div>
+
+
+          <div class="message-body">
+
+            <span class="quote">
+              “
+            </span>
+
+            <p>
+              {{ item.message }}
+            </p>
+
+          </div>
+
+
+          <div class="actions">
+
+            @if (
+              item.status !== 'approved'
+            ) {
+
+              <button
+                type="button"
+                class="approve"
+                [disabled]="isUpdating() === item.id"
+                (click)="updateStatus(item.id, 'approved')"
+              >
+                @if (
+                  isUpdating() === item.id
+                ) {
+                  Processing...
+                } @else {
+                  ✓ Approve
+                }
+              </button>
+
+            }
+
+
+            @if (
+              item.status !== 'rejected'
+            ) {
+
+              <button
+                type="button"
+                class="reject"
+                [disabled]="isUpdating() === item.id"
+                (click)="updateStatus(item.id, 'rejected')"
+              >
+                ✕ Reject
+              </button>
+
+            }
+
+
+            <button
+              type="button"
+              class="delete"
+              [disabled]="isUpdating() === item.id"
+              (click)="deleteMessage(item.id)"
+            >
+              🗑 Delete
+            </button>
+
+          </div>
+
+        </article>
+
+      }
+
+    </section>
+
+  }
+
+</div>

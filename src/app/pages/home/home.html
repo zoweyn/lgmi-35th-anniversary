@@ -1,0 +1,412 @@
+<header class="navbar">
+  <div class="nav-container">
+
+    <a routerLink="/" class="brand">
+      <div class="brand-mark">35</div>
+
+      <div class="brand-text">
+        <span class="brand-name">LGMI</span>
+        <span class="brand-anniversary">35TH ANNIVERSARY</span>
+      </div>
+    </a>
+
+    <nav class="nav-links">
+      <a routerLink="/">Home</a>
+      <a routerLink="/story">Our Story</a>
+      <a routerLink="/memories">Memories</a>
+      <a routerLink="/photos">Photos</a>
+      <a routerLink="/messages">Messages</a>
+    </nav>
+
+    <a routerLink="/memories" class="nav-button">
+      Share Your Story
+    </a>
+
+  </div>
+</header>
+
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <div class="hero-glow hero-glow-one"></div>
+    <div class="hero-glow hero-glow-two"></div>
+
+    <div class="hero-content">
+
+      <div class="eyebrow">
+        <span></span>
+        LGMI BALBALUNGAO
+        <span></span>
+      </div>
+
+      <p class="anniversary-label">
+        CELEBRATING
+      </p>
+
+      <h1>
+        35 Years of
+        <strong>God's Faithfulness</strong>
+      </h1>
+
+      <p class="hero-description">
+        A celebration of God's goodness, grace, and faithfulness
+        throughout 35 years of our church family.
+      </p>
+
+      <div class="event-details">
+
+        <div class="event-detail">
+          <span class="detail-icon">◈</span>
+          <div>
+            <small>DATE</small>
+            <strong>November 22, 2026</strong>
+          </div>
+        </div>
+
+        <div class="detail-divider"></div>
+
+        <div class="event-detail">
+          <span class="detail-icon">◷</span>
+          <div>
+            <small>TIME</small>
+            <strong>8:00 AM</strong>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="hero-actions">
+        <button
+          class="primary-button"
+          (click)="scrollToStory()"
+        >
+          Discover Our Story
+          <span>→</span>
+        </button>
+
+        <a
+          routerLink="/memories"
+          class="secondary-button"
+        >
+          Share a Memory
+        </a>
+      </div>
+
+    </div>
+
+    <div class="hero-cross">
+      <div class="cross-vertical"></div>
+      <div class="cross-horizontal"></div>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>SCROLL TO EXPLORE</span>
+      <div class="scroll-line"></div>
+    </div>
+
+  </section>
+
+
+  <!-- COUNTDOWN -->
+  <section class="countdown-section">
+
+    <div class="section-heading">
+      <p class="section-label">THE COUNTDOWN BEGINS</p>
+
+      <h2>
+        Until We Celebrate
+      </h2>
+
+      <p>
+        November 22, 2026 · 8:00 AM
+      </p>
+    </div>
+
+    <div class="countdown">
+
+      <div class="countdown-item">
+        <strong>{{ countdown().days }}</strong>
+        <span>Days</span>
+      </div>
+
+      <div class="countdown-separator">:</div>
+
+      <div class="countdown-item">
+        <strong>{{ countdown().hours.toString().padStart(2, '0') }}</strong>
+        <span>Hours</span>
+      </div>
+
+      <div class="countdown-separator">:</div>
+
+      <div class="countdown-item">
+        <strong>{{ countdown().minutes.toString().padStart(2, '0') }}</strong>
+        <span>Minutes</span>
+      </div>
+
+      <div class="countdown-separator">:</div>
+
+      <div class="countdown-item">
+        <strong>{{ countdown().seconds.toString().padStart(2, '0') }}</strong>
+        <span>Seconds</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- STORY PREVIEW -->
+  <section
+    id="story-preview"
+    class="story-preview"
+  >
+
+    <div class="story-content">
+
+      <p class="section-label">
+        OUR JOURNEY
+      </p>
+
+      <h2>
+        35 Years of
+        <span>Faithfulness</span>
+      </h2>
+
+      <p>
+        For 35 years, God has faithfully walked with
+        our church family through seasons of growth,
+        challenges, victories, worship, fellowship,
+        and countless memories.
+      </p>
+
+      <p>
+        As we look back at where God has brought us,
+        we also look forward with faith to what He
+        has prepared for the years ahead.
+      </p>
+
+      <a
+        routerLink="/story"
+        class="text-link"
+      >
+        Explore Our Story
+        <span>→</span>
+      </a>
+
+    </div>
+
+    <div class="timeline-card">
+
+      <div class="timeline-year start">
+        <strong>1991</strong>
+        <span>THE BEGINNING</span>
+      </div>
+
+      <div class="timeline-line">
+        <span></span>
+      </div>
+
+      <div class="timeline-year end">
+        <strong>2026</strong>
+        <span>35 YEARS</span>
+      </div>
+
+      <div class="timeline-caption">
+        <span>✦</span>
+        ONE GOD · ONE FAMILY · ONE FAITH
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- MEMORY SECTION -->
+  <section class="memory-section">
+
+    <div class="memory-inner">
+
+      <div class="memory-icon">
+        ✦
+      </div>
+
+      <p class="section-label light">
+        YOUR STORY MATTERS
+      </p>
+
+      <h2>
+        What is your most
+        <span>unforgettable</span>
+        church memory?
+      </h2>
+
+      <p>
+        From your first visit to the people you met,
+        the worship services you experienced, and
+        the moments that changed your life —
+        we'd love to hear your story.
+      </p>
+
+      <a
+        routerLink="/memories"
+        class="gold-button"
+      >
+        Share Your Memory
+        <span>→</span>
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- COMMUNITY FEATURES -->
+  <section class="features-section">
+
+    <div class="section-heading">
+      <p class="section-label">BE PART OF THE CELEBRATION</p>
+
+      <h2>
+        Remember. Share. Celebrate.
+      </h2>
+
+      <p>
+        Help us create a digital collection of
+        memories from our church family.
+      </p>
+    </div>
+
+
+    <div class="features-grid">
+
+      <a
+        routerLink="/memories"
+        class="feature-card"
+      >
+        <div class="feature-number">01</div>
+
+        <div class="feature-icon">
+          ♡
+        </div>
+
+        <h3>
+          Share a Memory
+        </h3>
+
+        <p>
+          Tell us about the moment in church
+          that you'll never forget.
+        </p>
+
+        <span class="feature-link">
+          Share your story →
+        </span>
+      </a>
+
+
+      <a
+        routerLink="/photos"
+        class="feature-card"
+      >
+        <div class="feature-number">02</div>
+
+        <div class="feature-icon">
+          ▣
+        </div>
+
+        <h3>
+          Add a Photo
+        </h3>
+
+        <p>
+          Share your favorite church photos
+          and help preserve our memories.
+        </p>
+
+        <span class="feature-link">
+          Visit photo wall →
+        </span>
+      </a>
+
+
+      <a
+        routerLink="/messages"
+        class="feature-card"
+      >
+        <div class="feature-number">03</div>
+
+        <div class="feature-icon">
+          ✉
+        </div>
+
+        <h3>
+          Message the Church
+        </h3>
+
+        <p>
+          Leave a special message for our
+          church family on this celebration.
+        </p>
+
+        <span class="feature-link">
+          Leave a message →
+        </span>
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- CLOSING -->
+  <section class="closing-section">
+
+    <div class="closing-cross">
+      ✦
+    </div>
+
+    <p class="section-label">
+      NOVEMBER 22, 2026
+    </p>
+
+    <h2>
+      Great is Thy
+      <span>Faithfulness</span>
+    </h2>
+
+    <p>
+      35 years behind us.
+      God's faithfulness throughout.
+      A future ahead of us.
+    </p>
+
+    <div class="closing-line"></div>
+
+    <strong>
+      LGMI BALBALUNGAO
+    </strong>
+
+  </section>
+
+</main>
+
+
+<footer class="footer">
+
+  <div class="footer-brand">
+    <strong>LGMI</strong>
+    <span>35TH ANNIVERSARY</span>
+  </div>
+
+  <p>
+    Celebrating 35 years of God's faithfulness.
+  </p>
+
+  <span class="footer-year">
+    © 2026 LGMI Balbalungao
+  </span>
+
+</footer>

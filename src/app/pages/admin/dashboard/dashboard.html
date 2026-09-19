@@ -1,0 +1,405 @@
+<div class="dashboard-page">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div class="brand">
+
+      <div class="brand-logo">
+        LGMI
+      </div>
+
+      <div>
+        <strong>LGMI Balbalungao</strong>
+        <span>35th Anniversary</span>
+      </div>
+
+    </div>
+
+
+    <nav class="navigation">
+
+      <p class="nav-label">
+        MAIN
+      </p>
+
+      <a
+        routerLink="/admin/dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-item"
+      >
+        <span class="nav-icon">⌂</span>
+        <span>Dashboard</span>
+      </a>
+
+
+      <p class="nav-label">
+        SUBMISSIONS
+      </p>
+
+      <a
+        routerLink="/admin/memories"
+        routerLinkActive="active"
+        class="nav-item"
+      >
+        <span class="nav-icon">♡</span>
+        <span>Memories</span>
+
+        @if (pendingCount() > 0) {
+          <span class="nav-badge">
+            {{ pendingCount() }}
+          </span>
+        }
+
+      </a>
+
+
+      <a
+        routerLink="/admin/photos"
+        routerLinkActive="active"
+        class="nav-item"
+      >
+        <span class="nav-icon">▣</span>
+        <span>Photos</span>
+      </a>
+
+
+      <a
+        routerLink="/admin/messages"
+        routerLinkActive="active"
+        class="nav-item"
+      >
+        <span class="nav-icon">✉</span>
+        <span>Church Messages</span>
+      </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+      <a
+        routerLink="/"
+        class="view-site"
+      >
+        ↗ View Anniversary Site
+      </a>
+
+      <button
+        type="button"
+        class="logout-button"
+        (click)="logout()"
+        [disabled]="isLoggingOut()"
+      >
+        @if (isLoggingOut()) {
+          Logging out...
+        } @else {
+          ↪ Logout
+        }
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN CONTENT -->
+
+  <main class="main-content">
+
+    <header class="topbar">
+
+      <div>
+        <p class="eyebrow">
+          ADMINISTRATION
+        </p>
+
+        <h1>
+          Dashboard
+        </h1>
+
+        <p class="subtitle">
+          Manage submissions for the
+          LGMI Balbalungao 35th Anniversary.
+        </p>
+      </div>
+
+      <div class="admin-avatar">
+        A
+      </div>
+
+    </header>
+
+
+    <!-- STATISTICS -->
+
+    <section class="stats-grid">
+
+      <!-- MEMORIES -->
+
+      <a
+        routerLink="/admin/memories"
+        class="stat-card"
+      >
+
+        <div class="stat-icon memory-icon">
+          ♡
+        </div>
+
+        <div class="stat-info">
+
+          <span>
+            Memories
+          </span>
+
+          @if (isLoading()) {
+            <strong>—</strong>
+          } @else {
+            <strong>
+              {{ memoryCount() }}
+            </strong>
+          }
+
+        </div>
+
+        <span class="card-arrow">
+          →
+        </span>
+
+      </a>
+
+
+      <!-- PHOTOS -->
+
+      <a
+        routerLink="/admin/photos"
+        class="stat-card"
+      >
+
+        <div class="stat-icon photo-icon">
+          ▣
+        </div>
+
+        <div class="stat-info">
+
+          <span>
+            Photos
+          </span>
+
+          @if (isLoading()) {
+            <strong>—</strong>
+          } @else {
+            <strong>
+              {{ photoCount() }}
+            </strong>
+          }
+
+        </div>
+
+        <span class="card-arrow">
+          →
+        </span>
+
+      </a>
+
+
+      <!-- MESSAGES -->
+
+      <a
+        routerLink="/admin/messages"
+        class="stat-card"
+      >
+
+        <div class="stat-icon message-icon">
+          ✉
+        </div>
+
+        <div class="stat-info">
+
+          <span>
+            Church Messages
+          </span>
+
+          @if (isLoading()) {
+            <strong>—</strong>
+          } @else {
+            <strong>
+              {{ messageCount() }}
+            </strong>
+          }
+
+        </div>
+
+        <span class="card-arrow">
+          →
+        </span>
+
+      </a>
+
+
+      <!-- PENDING -->
+
+      <div class="stat-card pending-card">
+
+        <div class="stat-icon pending-icon">
+          !
+        </div>
+
+        <div class="stat-info">
+
+          <span>
+            Pending Review
+          </span>
+
+          @if (isLoading()) {
+            <strong>—</strong>
+          } @else {
+            <strong>
+              {{ pendingCount() }}
+            </strong>
+          }
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- QUICK ACTIONS -->
+
+    <section class="section">
+
+      <div class="section-heading">
+
+        <div>
+          <h2>
+            Quick Actions
+          </h2>
+
+          <p>
+            Review and manage anniversary submissions.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="quick-grid">
+
+        <a
+          routerLink="/admin/memories"
+          class="quick-card"
+        >
+
+          <div class="quick-icon">
+            ♡
+          </div>
+
+          <div>
+            <h3>
+              Review Memories
+            </h3>
+
+            <p>
+              Read and approve memories
+              submitted by the church community.
+            </p>
+          </div>
+
+          <span>
+            →
+          </span>
+
+        </a>
+
+
+        <a
+          routerLink="/admin/photos"
+          class="quick-card"
+        >
+
+          <div class="quick-icon">
+            ▣
+          </div>
+
+          <div>
+            <h3>
+              Review Photos
+            </h3>
+
+            <p>
+              Check submitted photos before
+              displaying them in the gallery.
+            </p>
+          </div>
+
+          <span>
+            →
+          </span>
+
+        </a>
+
+
+        <a
+          routerLink="/admin/messages"
+          class="quick-card"
+        >
+
+          <div class="quick-icon">
+            ✉
+          </div>
+
+          <div>
+            <h3>
+              Review Messages
+            </h3>
+
+            <p>
+              Manage messages and greetings
+              for LGMI Balbalungao.
+            </p>
+          </div>
+
+          <span>
+            →
+          </span>
+
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- ANNIVERSARY INFO -->
+
+    <section class="anniversary-card">
+
+      <div>
+
+        <p class="anniversary-label">
+          LGMI BALBALUNGAO
+        </p>
+
+        <h2>
+          35 Years of God's Faithfulness
+        </h2>
+
+        <p>
+          November 22, 2026 · 8:00 AM
+        </p>
+
+      </div>
+
+      <div class="anniversary-mark">
+        35
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
