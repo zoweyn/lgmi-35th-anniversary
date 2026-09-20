@@ -301,15 +301,6 @@ This website is created to celebrate the faithfulness of God throughout the jour
 ### License
 This project was developed specifically for the LGMI Balbalungao 35th Anniversary celebration.
 
-### After replacing `README.md`
-
-Run:
-
-```powershell
-git add README.md
-git commit -m "Update project README"
-git push
-
 ---
 
 ##  Project Structure
