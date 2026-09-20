@@ -113,44 +113,6 @@ The website includes a QR code that allows church members and guests to quickly 
 - npm
 - Angular CLI
 
----
-
-##  Project Structure
-
-```text
-lgmi-35th-anniversary/
-│
-├── public/
-│   └── images/
-│
-├── src/
-│   ├── app/
-│   │   ├── core/
-│   │   │   └── supabase/
-│   │   │
-│   │   ├── pages/
-│   │   │   ├── home/
-│   │   │   ├── story/
-│   │   │   ├── memories/
-│   │   │   ├── photos/
-│   │   │   ├── messages/
-│   │   │   └── admin/
-│   │   │
-│   │   └── shared/
-│   │       ├── navbar/
-│   │       └── qr-code/
-│   │
-│   ├── environments/
-│   │
-│   ├── styles.scss
-│   └── main.ts
-│
-├── README.md
-├── angular.json
-├── package.json
-└── tsconfig.json
-
-----
 
 ## Getting Started
 
@@ -347,3 +309,40 @@ Run:
 git add README.md
 git commit -m "Update project README"
 git push
+
+---
+
+##  Project Structure
+
+```text
+lgmi-35th-anniversary/
+│
+├── public/
+│   └── images/
+│
+├── src/
+│   ├── app/
+│   │   ├── core/
+│   │   │   └── supabase/
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── home/
+│   │   │   ├── story/
+│   │   │   ├── memories/
+│   │   │   ├── photos/
+│   │   │   ├── messages/
+│   │   │   └── admin/
+│   │   │
+│   │   └── shared/
+│   │       ├── navbar/
+│   │       └── qr-code/
+│   │
+│   ├── environments/
+│   │
+│   ├── styles.scss
+│   └── main.ts
+│
+├── README.md
+├── angular.json
+├── package.json
+└── tsconfig.json
