@@ -116,31 +116,31 @@ The website includes a QR code that allows church members and guests to quickly 
 
 ## Getting Started
 
-# Prerequisites
+### Prerequisites
 Make sure the following are installed:
 Node.js
 npm
 Angular CLI
 Git
 
-# Check your installed versions:
+### Check your installed versions:
 node -v
 npm -v
 ng version
 git --version
 
-# Installation
+### Installation
 Clone the repository: git clone https://github.com/zoweyn/lgmi-35th-anniversary.git
 
-# Navigate into the project:
+### Navigate into the project:
 cd lgmi-35th-anniversary
 Install dependencies:
 npm install
 
-# Environment Configuration
+### Environment Configuration
 The application uses Supabase for database, authentication, and storage services.
 
-## Create the required environment configuration inside:
+### Create the required environment configuration inside:
 src/environments/environment.ts
 Example:
 export const environment = {
@@ -154,11 +154,11 @@ export const environment = {
 
 ----
 
-# Important
+### Important
 Do not expose or commit your Supabase secret/service-role key.
 Only the public/publishable key should be used by the Angular frontend.
 
-# Development Server
+### Development Server
 Start the development server: ng serve
 
 Then open:
@@ -168,35 +168,35 @@ The application automatically reloads whenever source files are modified.
 
 ---
 
-# Production Build
+### Production Build
 To create a production build:
 ng build
 The compiled application will be generated inside:
 dist/
 
-# Testing
+### Testing
 Run unit tests with:
 ng test
 
-# Admin Access
+### Admin Access
 The admin area is available through:
 /admin
 
-# The administrator must authenticate before accessing the dashboard.
+### The administrator must authenticate before accessing the dashboard.
 Protected routes include:
 /admin/dashboard
 /admin/memories
 /admin/photos
 /admin/messages
 
-# The application uses:
+### The application uses:
 Supabase Authentication
 Admin authorization
 Angular route guards
 Supabase Row Level Security (RLS)
 Regular website visitors do not have access to administrative management functions.
 
-# Database
+### Database
 The project uses Supabase PostgreSQL.
 Main tables include:
 memories
@@ -206,24 +206,24 @@ admin_users
 Memories
 Stores memories submitted by church members and visitors.
 
-# Photos
+### Photos
 Stores photo information and references to images stored in Supabase Storage.
 Church Messages
 Stores anniversary greetings and messages.
 Admin Users
 Used for administrator authorization.
 
-# Photo Storage
+### Photo Storage
 Uploaded anniversary photos are stored using the Supabase Storage bucket:
 anniversary-photos
 
-# Public submissions are stored under:
+### Public submissions are stored under:
 public/
 
 The system allows visitors to upload and view anniversary photos while restricting modification and deletion privileges.
 Administrators can remove photos through the admin dashboard.
 
-# Security
+### Security
 The application uses several security mechanisms:
 Supabase Authentication
 Row Level Security (RLS)
@@ -235,16 +235,16 @@ Public/publishable Supabase key for frontend access
 
 Administrative operations such as deleting submitted content are restricted to authorized administrators.
 
-# Responsive Design
+### Responsive Design
 The website is designed to work across:
 Desktop
 Laptop
 Tablet
 
-# Mobile devices
+### Mobile devices
 The interface follows a consistent visual design inspired by the church's anniversary theme.
 
-# Deployment
+### Deployment
 The project is connected to GitHub and Netlify.
 The deployment workflow is:
 Local Development
@@ -280,25 +280,25 @@ Administration
 /admin/photos
 /admin/messages
 
-# Project Purpose
+### Project Purpose
 The LGMI Balbalungao 35th Anniversary Website was developed to provide the church community with a centralized digital platform for:
 
-# Celebrating 35 years of God's faithfulness
+### Celebrating 35 years of God's faithfulness
 Preserving church memories
 Collecting anniversary photos
 Sharing messages and greetings
 Presenting the church's journey
 Providing easy access to anniversary information
 
-# Developer
+### Developer
 Developed as a web development project for:
 Living Gospel Ministries Inc. – Balbalungao
 
-## Acknowledgment
+### Acknowledgment
 "35 Years of God's Faithfulness"
 This website is created to celebrate the faithfulness of God throughout the journey of LGMI Balbalungao and to preserve the memories and testimonies of the church community.
 
-## License
+### License
 This project was developed specifically for the LGMI Balbalungao 35th Anniversary celebration.
 
 ### After replacing `README.md`
