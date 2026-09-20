@@ -39,53 +39,6 @@
   }
 
 
-  <!-- FILTERS -->
-
-  <section class="filter-section">
-
-    <button
-      type="button"
-      class="filter-button"
-      [class.active]="selectedFilter() === 'all'"
-      (click)="setFilter('all')"
-    >
-      All
-      <span>{{ getCount('all') }}</span>
-    </button>
-
-    <button
-      type="button"
-      class="filter-button"
-      [class.active]="selectedFilter() === 'pending'"
-      (click)="setFilter('pending')"
-    >
-      Pending
-      <span>{{ getCount('pending') }}</span>
-    </button>
-
-    <button
-      type="button"
-      class="filter-button"
-      [class.active]="selectedFilter() === 'approved'"
-      (click)="setFilter('approved')"
-    >
-      Approved
-      <span>{{ getCount('approved') }}</span>
-    </button>
-
-    <button
-      type="button"
-      class="filter-button"
-      [class.active]="selectedFilter() === 'rejected'"
-      (click)="setFilter('rejected')"
-    >
-      Rejected
-      <span>{{ getCount('rejected') }}</span>
-    </button>
-
-  </section>
-
-
   <!-- LOADING -->
 
   @if (isLoading()) {
@@ -105,7 +58,7 @@
 
   <!-- EMPTY -->
 
-  @else if (filteredPhotos().length === 0) {
+  @else if (photos().length === 0) {
 
     <div class="empty-state">
 
@@ -131,7 +84,7 @@
     <section class="photo-grid">
 
       @for (
-        photo of filteredPhotos();
+        photo of photos();
         track photo.id
       ) {
 
@@ -158,15 +111,6 @@
               </div>
 
             }
-
-            <div
-              class="status-badge"
-              [class.pending]="photo.status === 'pending'"
-              [class.approved]="photo.status === 'approved'"
-              [class.rejected]="photo.status === 'rejected'"
-            >
-              {{ photo.status }}
-            </div>
 
           </div>
 
@@ -209,42 +153,9 @@
 
             <div class="actions">
 
-              @if (photo.status !== 'approved') {
-
-                <button
-                  type="button"
-                  class="approve-button"
-                  [disabled]="isUpdating() === photo.id"
-                  (click)="updateStatus(photo.id, 'approved')"
-                >
-                  @if (isUpdating() === photo.id) {
-                    Processing...
-                  } @else {
-                    ✓ Approve
-                  }
-                </button>
-
-              }
-
-
-              @if (photo.status !== 'rejected') {
-
-                <button
-                  type="button"
-                  class="reject-button"
-                  [disabled]="isUpdating() === photo.id"
-                  (click)="updateStatus(photo.id, 'rejected')"
-                >
-                  ✕ Reject
-                </button>
-
-              }
-
-
               <button
                 type="button"
                 class="delete-button"
-                [disabled]="isUpdating() === photo.id"
                 (click)="deletePhoto(photo.id)"
               >
                 🗑 Delete

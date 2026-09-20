@@ -3,10 +3,9 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-
 import { SupabaseService } from '../../core/supabase';
 
-interface ApprovedMemory {
+interface PublicMemory {
   id: string;
   name: string | null;
   message: string;
@@ -43,7 +42,7 @@ export class Memories implements OnInit {
   // PUBLIC MEMORIES
   // ================================
 
-  approvedMemories = signal<ApprovedMemory[]>([]);
+  publicMemories = signal<PublicMemory[]>([]);
 
   isLoadingMemories = signal(true);
 
@@ -52,21 +51,20 @@ export class Memories implements OnInit {
   // ================================
 
   async ngOnInit() {
-    await this.loadApprovedMemories();
+    await this.loadPublicMemories();
   }
 
   // ================================
   // LOAD APPROVED MEMORIES
   // ================================
 
-  async loadApprovedMemories() {
+  async loadPublicMemories() {
     this.isLoadingMemories.set(true);
 
     try {
       const { data, error } = await this.supabaseService.client
         .from('memories')
         .select('id, name, message, is_anonymous, created_at')
-        .eq('status', 'approved')
         .order('created_at', {
           ascending: false,
         });
@@ -75,9 +73,9 @@ export class Memories implements OnInit {
         throw error;
       }
 
-      this.approvedMemories.set(data ?? []);
+      this.publicMemories.set(data ?? []);
     } catch (error) {
-      console.error('Unable to load approved memories:', error);
+      console.error('Unable to load public memories:', error);
     } finally {
       this.isLoadingMemories.set(false);
     }
@@ -118,7 +116,7 @@ export class Memories implements OnInit {
 
         is_anonymous: this.isAnonymous,
 
-        status: 'pending',
+        status: 'approved',
       });
 
       if (error) {
@@ -150,8 +148,13 @@ export class Memories implements OnInit {
 
   submitAnother() {
     this.submitted.set(false);
-
     this.errorMessage.set('');
+
+    this.loadPublicMemories();
+  }
+
+  done() {
+    window.location.reload();
   }
 
   // ================================

@@ -20,7 +20,6 @@ export class Dashboard {
   memoryCount = signal(0);
   photoCount = signal(0);
   messageCount = signal(0);
-  pendingCount = signal(0);
 
   async ngOnInit() {
     await this.loadStatistics();
@@ -47,37 +46,12 @@ export class Dashboard {
         head: true,
       });
 
-      const { count: pendingMemories } = await supabase
-        .from('memories')
-        .select('*', {
-          count: 'exact',
-          head: true,
-        })
-        .eq('status', 'pending');
-
-      const { count: pendingPhotos } = await supabase
-        .from('photos')
-        .select('*', {
-          count: 'exact',
-          head: true,
-        })
-        .eq('status', 'pending');
-
-      const { count: pendingMessages } = await supabase
-        .from('church_messages')
-        .select('*', {
-          count: 'exact',
-          head: true,
-        })
-        .eq('status', 'pending');
-
       this.memoryCount.set(memories ?? 0);
 
       this.photoCount.set(photos ?? 0);
 
       this.messageCount.set(messages ?? 0);
 
-      this.pendingCount.set((pendingMemories ?? 0) + (pendingPhotos ?? 0) + (pendingMessages ?? 0));
     } catch (error) {
       console.error('Unable to load dashboard statistics:', error);
     } finally {

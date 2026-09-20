@@ -1,15 +1,10 @@
 <div class="memories-page">
-
-
   <!-- ==========================================
        HERO
   =========================================== -->
 
   <section class="hero">
-
-    <span class="eyebrow">
-      SHARE YOUR STORY
-    </span>
+    <span class="eyebrow"> SHARE YOUR STORY </span>
 
     <h1>
       What is your most
@@ -18,61 +13,34 @@
     </h1>
 
     <p>
-      It could be your first visit, a special
-      worship service, a meaningful friendship,
-      a youth fellowship, a mission trip, or simply
-      a moment when God touched your life.
+      It could be your first visit, a special worship service, a meaningful friendship, a youth
+      fellowship, a mission trip, or simply a moment when God touched your life.
     </p>
-
   </section>
-
 
   <!-- ==========================================
        MEMORY SUBMISSION
   =========================================== -->
 
   <section class="submission-section">
-
     <div class="form-card">
-
       @if (!submitted()) {
-
         <div class="form-header">
+          <span class="section-label"> YOUR STORY </span>
 
-          <span class="section-label">
-            YOUR STORY
-          </span>
+          <h2>Share a memory with us</h2>
 
-          <h2>
-            Share a memory with us
-          </h2>
-
-          <p>
-            Your story may become part of our
-            35th anniversary celebration.
-          </p>
-
+          <p>Your story may become part of our 35th anniversary celebration.</p>
         </div>
 
-
-        <form
-          (ngSubmit)="submitMemory()"
-        >
-
+        <form (ngSubmit)="submitMemory()">
           <!-- NAME -->
 
           <div class="form-group">
-
             <div class="label-row">
+              <label for="name"> Your Name </label>
 
-              <label for="name">
-                Your Name
-              </label>
-
-              <span>
-                OPTIONAL
-              </span>
-
+              <span> OPTIONAL </span>
             </div>
 
             <input
@@ -83,24 +51,15 @@
               placeholder="Enter your name"
               [disabled]="isSubmitting()"
             />
-
           </div>
-
 
           <!-- MESSAGE -->
 
           <div class="form-group">
-
             <div class="label-row">
+              <label for="message"> Your Memory </label>
 
-              <label for="message">
-                Your Memory
-              </label>
-
-              <span class="required">
-                REQUIRED
-              </span>
-
+              <span class="required"> REQUIRED </span>
             </div>
 
             <textarea
@@ -112,17 +71,12 @@
               [disabled]="isSubmitting()"
             ></textarea>
 
-            <div class="character-hint">
-              Share at least 10 characters.
-            </div>
-
+            <div class="character-hint">Share at least 10 characters.</div>
           </div>
-
 
           <!-- ANONYMOUS -->
 
           <label class="anonymous-option">
-
             <input
               type="checkbox"
               name="isAnonymous"
@@ -131,309 +85,151 @@
             />
 
             <span class="checkbox-text">
+              <strong> Keep my name anonymous </strong>
 
-              <strong>
-                Keep my name anonymous
-              </strong>
-
-              <small>
-                Your name will not be shown publicly.
-              </small>
-
+              <small> Your name will not be shown publicly. </small>
             </span>
-
           </label>
-
 
           <!-- ERROR -->
 
           @if (errorMessage()) {
-
             <div class="error-message">
-
               <span>⚠</span>
 
               {{ errorMessage() }}
-
             </div>
-
           }
-
 
           <!-- SUBMIT -->
 
-          <button
-            type="submit"
-            class="submit-button"
-            [disabled]="isSubmitting()"
-          >
-
+          <button type="submit" class="submit-button" [disabled]="isSubmitting()">
             @if (isSubmitting()) {
-
               <span class="button-spinner"></span>
 
               Submitting...
-
             } @else {
-
               Share My Memory
               <span>→</span>
-
             }
-
           </button>
 
-
           <p class="moderation-note">
-
-            Every submission is reviewed before
-            appearing on the website.
-
+            Every submission is reviewed before appearing on the website.
           </p>
-
         </form>
-
-
       } @else {
-
-
         <!-- SUCCESS -->
 
         <div class="success-state">
+          <div class="success-icon">✓</div>
 
-          <div class="success-icon">
-            ✓
-          </div>
+          <span class="section-label"> THANK YOU </span>
 
-          <span class="section-label">
-            THANK YOU
-          </span>
+          <h2>Your memory has been received.</h2>
 
-          <h2>
-            Your memory has been received.
-          </h2>
+          <p>Thank you for sharing a meaningful part of your journey with LGMI Balbalungao.</p>
 
-          <p>
-            Thank you for sharing a meaningful
-            part of your journey with LGMI
-            Balbalungao.
-          </p>
+          <p>Thank you for sharing your memory with the LGMI Balbalungao community.</p>
 
-          <p>
-            Your story has been submitted for
-            review. Once approved, it may be
-            shared with our church family.
-          </p>
-
-          <button
-            class="another-button"
-            type="button"
-            (click)="submitAnother()"
-          >
+          <button class="another-button" type="button" (click)="submitAnother()">
             Share Another Memory
           </button>
 
+          <button class="done-button" type="button" (click)="done()">
+            Done
+          </button>
         </div>
-
       }
-
     </div>
-
   </section>
-
 
   <!-- ==========================================
        PUBLIC APPROVED MEMORIES
   =========================================== -->
 
   <section class="public-memories">
-
     <div class="section-heading">
+      <span class="eyebrow"> FROM OUR CHURCH FAMILY </span>
 
-      <span class="eyebrow">
-        FROM OUR CHURCH FAMILY
-      </span>
+      <h2>Memories We Hold Dear</h2>
 
-      <h2>
-        Memories We Hold Dear
-      </h2>
-
-      <p>
-        Stories and moments shared by our church
-        family as we celebrate God's faithfulness.
-      </p>
-
+      <p>Stories and moments shared by our church family as we celebrate God's faithfulness.</p>
     </div>
-
 
     <!-- LOADING -->
 
     @if (isLoadingMemories()) {
-
       <div class="memory-loading">
-
         <div class="memory-spinner"></div>
 
-        <p>
-          Loading memories...
-        </p>
-
+        <p>Loading memories...</p>
       </div>
-
     }
-
 
     <!-- NO MEMORIES -->
 
-    @if (
-      !isLoadingMemories() &&
-      approvedMemories().length === 0
-    ) {
-
+    @if (!isLoadingMemories() && publicMemories().length === 0) {
       <div class="no-memories">
+        <div class="empty-heart">♡</div>
 
-        <div class="empty-heart">
-          ♡
-        </div>
-
-        <h3>
-          Memories are coming soon
-        </h3>
+        <h3>Memories are coming soon</h3>
 
         <p>
-          Be one of the first to share a meaningful
-          moment from your journey with LGMI
-          Balbalungao.
+          Be one of the first to share a meaningful moment from your journey with LGMI Balbalungao.
         </p>
-
       </div>
-
     }
-
 
     <!-- MEMORY CARDS -->
 
-    @if (
-      !isLoadingMemories() &&
-      approvedMemories().length > 0
-    ) {
-
+    @if (!isLoadingMemories() && publicMemories().length > 0) {
       <div class="memory-grid">
-
-        @for (
-          memory of approvedMemories();
-          track memory.id
-        ) {
-
+        @for (memory of publicMemories(); track memory.id) {
           <article class="public-memory-card">
-
-            <div class="quote-mark">
-              “
-            </div>
+            <div class="quote-mark">“</div>
 
             <p class="memory-message">
               {{ memory.message }}
             </p>
 
             <div class="memory-author">
-
               <div class="author-avatar">
-
-                {{
-                  memory.is_anonymous
-                    ? '?'
-                    : (memory.name || 'U')
-                        .charAt(0)
-                        .toUpperCase()
-                }}
-
+                {{ memory.is_anonymous ? '?' : (memory.name || 'U').charAt(0).toUpperCase() }}
               </div>
 
               <div>
-
                 <strong>
-                  {{
-                    memory.is_anonymous
-                      ? 'Anonymous'
-                      : (memory.name || 'Church Family')
-                  }}
+                  {{ memory.is_anonymous ? 'Anonymous' : memory.name || 'Church Family' }}
                 </strong>
 
-                <span>
-                  LGMI Balbalungao
-                </span>
-
+                <span> LGMI Balbalungao </span>
               </div>
-
             </div>
 
             <div class="memory-date">
               {{ formatDate(memory.created_at) }}
             </div>
-
           </article>
-
         }
-
       </div>
-
     }
-
   </section>
-
 
   <!-- ==========================================
        CLOSING
   =========================================== -->
 
   <section class="closing-section">
-
     <div class="closing-content">
+      <span class="closing-cross"> ✝ </span>
 
-      <span class="closing-cross">
-        ✝
-      </span>
+      <h2>35 Years of God's Faithfulness</h2>
 
-      <h2>
-        35 Years of God's Faithfulness
-      </h2>
+      <p>Every story is a reminder of what God has done through our church family.</p>
 
-      <p>
-        Every story is a reminder of what God
-        has done through our church family.
-      </p>
-
-      <span class="closing-date">
-        November 22, 2026 · 8:00 AM
-      </span>
-
+      <span class="closing-date"> November 22, 2026 · 8:00 AM </span>
     </div>
-
   </section>
-
-
-  <!-- ==========================================
-       FOOTER
-  =========================================== -->
-
-  <footer class="footer">
-
-    <div>
-
-      <strong>
-        LGMI Balbalungao
-      </strong>
-
-      <span>
-        Celebrating 35 Years of God's Faithfulness
-      </span>
-
-    </div>
-
-    <div>
-      © 2026 LGMI Balbalungao
-    </div>
-
-  </footer>
 
 </div>

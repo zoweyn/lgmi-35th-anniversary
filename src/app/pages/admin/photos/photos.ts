@@ -1,5 +1,12 @@
-import { Component, inject, signal } from '@angular/core';
-import { SupabaseService } from '../../../core/supabase';
+import {
+  Component,
+  inject,
+  signal
+} from '@angular/core';
+
+import {
+  SupabaseService
+} from '../../../core/supabase';
 
 interface Photo {
   id: string;
@@ -8,7 +15,6 @@ interface Photo {
   image_url: string | null;
   storage_path: string;
   is_anonymous: boolean;
-  status: 'pending' | 'approved' | 'rejected';
   created_at: string;
   updated_at: string;
   previewUrl?: string;
@@ -21,83 +27,117 @@ interface Photo {
   styleUrl: './photos.scss'
 })
 export class AdminPhotos {
-  private readonly supabaseService = inject(SupabaseService);
 
-  photos = signal<Photo[]>([]);
+  private readonly supabaseService =
+    inject(SupabaseService);
 
-  isLoading = signal(true);
-  isUpdating = signal<string | null>(null);
+  photos =
+    signal<Photo[]>([]);
 
-  errorMessage = signal('');
-  successMessage = signal('');
+  isLoading =
+    signal(true);
 
-  selectedFilter = signal<
-    'all' | 'pending' | 'approved' | 'rejected'
-  >('all');
+  isDeleting =
+    signal<string | null>(null);
+
+  errorMessage =
+    signal('');
+
+  successMessage =
+    signal('');
+
 
   async ngOnInit() {
     await this.loadPhotos();
   }
 
+
   async loadPhotos() {
+
     this.isLoading.set(true);
     this.errorMessage.set('');
 
     try {
-      const supabase = this.supabaseService.client;
 
-      const { data, error } = await supabase
-        .from('photos')
-        .select('*')
-        .order('created_at', {
-          ascending: false
-        });
+      const supabase =
+        this.supabaseService.client;
+
+      const { data, error } =
+        await supabase
+          .from('photos')
+          .select('*')
+          .order(
+            'created_at',
+            {
+              ascending: false
+            }
+          );
 
       if (error) {
         throw error;
       }
 
-      const photos = (data ?? []) as Photo[];
+      const photos =
+        (data ?? []) as Photo[];
+
 
       /*
-       * Create signed URLs for photo previews.
-       *
-       * The bucket is private, so the browser cannot
-       * directly access the stored image.
+       * Generate signed URLs for
+       * admin photo previews.
        */
-      const photosWithUrls = await Promise.all(
-        photos.map(async photo => {
-          if (!photo.storage_path) {
-            return photo;
-          }
+      const photosWithUrls =
+        await Promise.all(
 
-          const { data: signedUrlData, error: signedUrlError } =
-            await supabase.storage
-              .from('anniversary-photos')
-              .createSignedUrl(
-                photo.storage_path,
-                3600
-              );
+          photos.map(
+            async photo => {
 
-          if (signedUrlError) {
-            console.error(
-              'Unable to create signed URL:',
-              signedUrlError
-            );
+              if (!photo.storage_path) {
+                return photo;
+              }
 
-            return photo;
-          }
+              const {
+                data: signedUrlData,
+                error: signedUrlError
+              } =
+                await supabase.storage
+                  .from(
+                    'anniversary-photos'
+                  )
+                  .createSignedUrl(
+                    photo.storage_path,
+                    3600
+                  );
 
-          return {
-            ...photo,
-            previewUrl:
-              signedUrlData?.signedUrl ?? undefined
-          };
-        })
+              if (signedUrlError) {
+
+                console.error(
+                  'Unable to create signed URL:',
+                  signedUrlError
+                );
+
+                return photo;
+              }
+
+              return {
+                ...photo,
+
+                previewUrl:
+                  signedUrlData?.signedUrl ??
+                  undefined
+              };
+
+            }
+          )
+
+        );
+
+
+      this.photos.set(
+        photosWithUrls
       );
 
-      this.photos.set(photosWithUrls);
     } catch (error: any) {
+
       console.error(
         'Unable to load photos:',
         error
@@ -107,113 +147,29 @@ export class AdminPhotos {
         error?.message ??
         'Unable to load submitted photos.'
       );
+
     } finally {
+
       this.isLoading.set(false);
+
     }
   }
 
-  setFilter(
-    filter:
-      | 'all'
-      | 'pending'
-      | 'approved'
-      | 'rejected'
+
+  async deletePhoto(
+    id: string
   ) {
-    this.selectedFilter.set(filter);
-  }
 
-  filteredPhotos() {
-    const filter = this.selectedFilter();
-
-    if (filter === 'all') {
-      return this.photos();
-    }
-
-    return this.photos().filter(
-      photo => photo.status === filter
-    );
-  }
-
-  getCount(
-    status:
-      | 'all'
-      | 'pending'
-      | 'approved'
-      | 'rejected'
-  ) {
-    if (status === 'all') {
-      return this.photos().length;
-    }
-
-    return this.photos().filter(
-      photo => photo.status === status
-    ).length;
-  }
-
-  async updateStatus(
-    id: string,
-    status: 'approved' | 'rejected'
-  ) {
-    this.isUpdating.set(id);
-    this.errorMessage.set('');
-    this.successMessage.set('');
-
-    try {
-      const { error } =
-        await this.supabaseService.client
-          .from('photos')
-          .update({
-            status,
-            updated_at:
-              new Date().toISOString()
-          })
-          .eq('id', id);
-
-      if (error) {
-        throw error;
-      }
-
-      this.photos.update(
-        photos =>
-          photos.map(photo =>
-            photo.id === id
-              ? {
-                  ...photo,
-                  status
-                }
-              : photo
-          )
-      );
-
-      this.successMessage.set(
-        status === 'approved'
-          ? 'Photo approved successfully.'
-          : 'Photo rejected successfully.'
-      );
-    } catch (error: any) {
-      console.error(
-        'Unable to update photo:',
-        error
-      );
-
-      this.errorMessage.set(
-        error?.message ??
-        'Unable to update photo.'
-      );
-    } finally {
-      this.isUpdating.set(null);
-    }
-  }
-
-  async deletePhoto(id: string) {
     const photo =
       this.photos().find(
-        item => item.id === id
+        item =>
+          item.id === id
       );
 
     if (!photo) {
       return;
     }
+
 
     const confirmed =
       window.confirm(
@@ -224,22 +180,32 @@ export class AdminPhotos {
       return;
     }
 
-    this.isUpdating.set(id);
+
+    this.isDeleting.set(id);
+
     this.errorMessage.set('');
     this.successMessage.set('');
 
+
     try {
+
       const supabase =
         this.supabaseService.client;
 
+
       /*
-       * First remove the actual image from
-       * Supabase Storage.
+       * Delete the actual image
+       * from Supabase Storage.
        */
       if (photo.storage_path) {
-        const { error: storageError } =
+
+        const {
+          error: storageError
+        } =
           await supabase.storage
-            .from('anniversary-photos')
+            .from(
+              'anniversary-photos'
+            )
             .remove([
               photo.storage_path
             ]);
@@ -249,10 +215,13 @@ export class AdminPhotos {
         }
       }
 
+
       /*
-       * Then remove the database record.
+       * Delete the database record.
        */
-      const { error: databaseError } =
+      const {
+        error: databaseError
+      } =
         await supabase
           .from('photos')
           .delete()
@@ -262,17 +231,22 @@ export class AdminPhotos {
         throw databaseError;
       }
 
+
       this.photos.update(
         photos =>
           photos.filter(
-            item => item.id !== id
+            item =>
+              item.id !== id
           )
       );
+
 
       this.successMessage.set(
         'Photo deleted successfully.'
       );
+
     } catch (error: any) {
+
       console.error(
         'Unable to delete photo:',
         error
@@ -282,26 +256,41 @@ export class AdminPhotos {
         error?.message ??
         'Unable to delete photo.'
       );
+
     } finally {
-      this.isUpdating.set(null);
+
+      this.isDeleting.set(null);
+
     }
   }
 
+
   formatDate(date: string) {
+
     return new Intl.DateTimeFormat(
       'en-PH',
       {
         dateStyle: 'medium',
         timeStyle: 'short'
       }
-    ).format(new Date(date));
+    ).format(
+      new Date(date)
+    );
+
   }
 
+
   displayName(photo: Photo) {
+
     if (photo.is_anonymous) {
       return 'Anonymous';
     }
 
-    return photo.name?.trim() || 'Anonymous';
+    return (
+      photo.name?.trim() ??
+      'Anonymous'
+    );
+
   }
+
 }

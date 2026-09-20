@@ -13,10 +13,6 @@ interface ChurchMessage {
   name: string | null;
   message: string;
   is_anonymous: boolean;
-  status:
-    | 'pending'
-    | 'approved'
-    | 'rejected';
   created_at: string;
   updated_at: string;
 }
@@ -35,22 +31,17 @@ export class AdminMessages {
   messages =
     signal<ChurchMessage[]>([]);
 
-  isLoading = signal(true);
+  isLoading =
+    signal(true);
 
-  isUpdating =
+  isDeleting =
     signal<string | null>(null);
 
-  errorMessage = signal('');
+  errorMessage =
+    signal('');
 
-  successMessage = signal('');
-
-  selectedFilter =
-    signal<
-      'all' |
-      'pending' |
-      'approved' |
-      'rejected'
-    >('all');
+  successMessage =
+    signal('');
 
 
   async ngOnInit() {
@@ -61,7 +52,6 @@ export class AdminMessages {
   async loadMessages() {
 
     this.isLoading.set(true);
-
     this.errorMessage.set('');
 
     try {
@@ -105,128 +95,6 @@ export class AdminMessages {
   }
 
 
-  setFilter(
-    filter:
-      | 'all'
-      | 'pending'
-      | 'approved'
-      | 'rejected'
-  ) {
-
-    this.selectedFilter.set(
-      filter
-    );
-
-  }
-
-
-  filteredMessages() {
-
-    const filter =
-      this.selectedFilter();
-
-    if (filter === 'all') {
-      return this.messages();
-    }
-
-    return this.messages()
-      .filter(
-        message =>
-          message.status === filter
-      );
-  }
-
-
-  getCount(
-    status:
-      | 'all'
-      | 'pending'
-      | 'approved'
-      | 'rejected'
-  ) {
-
-    if (status === 'all') {
-      return this.messages().length;
-    }
-
-    return this.messages()
-      .filter(
-        message =>
-          message.status === status
-      )
-      .length;
-  }
-
-
-  async updateStatus(
-    id: string,
-    status:
-      | 'approved'
-      | 'rejected'
-  ) {
-
-    this.isUpdating.set(id);
-
-    this.errorMessage.set('');
-
-    this.successMessage.set('');
-
-    try {
-
-      const { error } =
-        await this.supabaseService.client
-          .from('church_messages')
-          .update({
-            status,
-
-            updated_at:
-              new Date().toISOString()
-          })
-          .eq('id', id);
-
-      if (error) {
-        throw error;
-      }
-
-      this.messages.update(
-        messages =>
-          messages.map(
-            message =>
-              message.id === id
-                ? {
-                    ...message,
-                    status
-                  }
-                : message
-          )
-      );
-
-      this.successMessage.set(
-        status === 'approved'
-          ? 'Message approved successfully.'
-          : 'Message rejected successfully.'
-      );
-
-    } catch (error: any) {
-
-      console.error(
-        'Unable to update message:',
-        error
-      );
-
-      this.errorMessage.set(
-        error?.message ??
-        'Unable to update message.'
-      );
-
-    } finally {
-
-      this.isUpdating.set(null);
-
-    }
-  }
-
-
   async deleteMessage(
     id: string
   ) {
@@ -240,10 +108,9 @@ export class AdminMessages {
       return;
     }
 
-    this.isUpdating.set(id);
+    this.isDeleting.set(id);
 
     this.errorMessage.set('');
-
     this.successMessage.set('');
 
     try {
@@ -284,7 +151,7 @@ export class AdminMessages {
 
     } finally {
 
-      this.isUpdating.set(null);
+      this.isDeleting.set(null);
 
     }
   }
@@ -299,7 +166,7 @@ export class AdminMessages {
     }
 
     return (
-      message.name?.trim() ||
+      message.name?.trim() ??
       'Anonymous'
     );
   }

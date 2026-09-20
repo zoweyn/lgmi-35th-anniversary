@@ -46,66 +46,6 @@
   }
 
 
-  <!-- FILTERS -->
-
-  <div class="filter-bar">
-
-    <button
-      [class.active]="selectedFilter() === 'all'"
-      (click)="setFilter('all')"
-    >
-      All
-      <span>{{ memories().length }}</span>
-    </button>
-
-    <button
-      [class.active]="selectedFilter() === 'pending'"
-      (click)="setFilter('pending')"
-    >
-      Pending
-
-      <span>
-        {{
-          memories().filter(
-            memory => memory.status === 'pending'
-          ).length
-        }}
-      </span>
-    </button>
-
-    <button
-      [class.active]="selectedFilter() === 'approved'"
-      (click)="setFilter('approved')"
-    >
-      Approved
-
-      <span>
-        {{
-          memories().filter(
-            memory => memory.status === 'approved'
-          ).length
-        }}
-      </span>
-    </button>
-
-    <button
-      [class.active]="selectedFilter() === 'rejected'"
-      (click)="setFilter('rejected')"
-    >
-      Rejected
-
-      <span>
-        {{
-          memories().filter(
-            memory => memory.status === 'rejected'
-          ).length
-        }}
-      </span>
-    </button>
-
-  </div>
-
-
   <!-- LOADING -->
 
   @if (isLoading()) {
@@ -125,7 +65,7 @@
 
   <!-- EMPTY -->
 
-  @if (!isLoading() && filteredMemories().length === 0) {
+  @if (!isLoading() && memories().length === 0) {
 
     <div class="state-card">
 
@@ -148,12 +88,12 @@
 
   <!-- MEMORY LIST -->
 
-  @if (!isLoading() && filteredMemories().length > 0) {
+  @if (!isLoading() && memories().length > 0) {
 
     <div class="memory-list">
 
       @for (
-        memory of filteredMemories();
+        memory of memories();
         track memory.id
       ) {
 
@@ -190,15 +130,6 @@
             </div>
 
 
-            <span
-              class="status"
-              [class.pending]="memory.status === 'pending'"
-              [class.approved]="memory.status === 'approved'"
-              [class.rejected]="memory.status === 'rejected'"
-            >
-              {{ memory.status }}
-            </span>
-
           </div>
 
 
@@ -211,76 +142,10 @@
           </div>
 
 
-          @if (memory.status === 'pending') {
-
-            <div class="actions">
-
-              <button
-                class="approve-button"
-                (click)="updateStatus(memory.id, 'approved')"
-                [disabled]="isUpdating() === memory.id"
-              >
-
-                @if (isUpdating() === memory.id) {
-                  Processing...
-                } @else {
-                  ✓ Approve
-                }
-
-              </button>
-
-
-              <button
-                class="reject-button"
-                (click)="updateStatus(memory.id, 'rejected')"
-                [disabled]="isUpdating() === memory.id"
-              >
-
-                @if (isUpdating() === memory.id) {
-                  Processing...
-                } @else {
-                  ✕ Reject
-                }
-
-              </button>
-
-            </div>
-
-          }
-
-
           <div class="bottom-actions">
-
-            @if (memory.status === 'rejected') {
-
-              <button
-                class="approve-small"
-                (click)="updateStatus(memory.id, 'approved')"
-                [disabled]="isUpdating() === memory.id"
-              >
-                ✓ Approve
-              </button>
-
-            }
-
-
-            @if (memory.status === 'approved') {
-
-              <button
-                class="reject-small"
-                (click)="updateStatus(memory.id, 'rejected')"
-                [disabled]="isUpdating() === memory.id"
-              >
-                ✕ Reject
-              </button>
-
-            }
-
-
             <button
               class="delete-button"
               (click)="deleteMemory(memory.id)"
-              [disabled]="isUpdating() === memory.id"
             >
               🗑 Delete
             </button>

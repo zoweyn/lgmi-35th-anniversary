@@ -6,7 +6,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { SupabaseService } from '../../core/supabase';
 
-interface ApprovedPhoto {
+interface PublicPhoto {
   id: string;
   name: string | null;
   caption: string | null;
@@ -48,7 +48,7 @@ export class Photos implements OnInit {
   // PUBLIC PHOTOS
   // ==========================================
 
-  approvedPhotos = signal<ApprovedPhoto[]>([]);
+  publicPhotos = signal<PublicPhoto[]>([]);
 
   isLoadingPhotos = signal(true);
 
@@ -57,7 +57,7 @@ export class Photos implements OnInit {
   // ==========================================
 
   async ngOnInit() {
-    await this.loadApprovedPhotos();
+    await this.loadPublicPhotos();
   }
 
   // ==========================================
@@ -127,7 +127,7 @@ export class Photos implements OnInit {
 
       const uniqueName = `${crypto.randomUUID()}.${fileExtension}`;
 
-      const storagePath = `pending/${uniqueName}`;
+      const storagePath = `public/${uniqueName}`;
 
       // ========================================
       // UPLOAD TO STORAGE
@@ -164,7 +164,7 @@ export class Photos implements OnInit {
 
         is_anonymous: this.isAnonymous,
 
-        status: 'pending',
+        status: 'approved',
       });
 
       if (databaseError) {
@@ -206,11 +206,15 @@ export class Photos implements OnInit {
     this.errorMessage.set('');
   }
 
+  done() {
+    window.location.reload();
+  }
+
   // ==========================================
   // LOAD APPROVED PHOTOS
   // ==========================================
 
-  async loadApprovedPhotos() {
+  async loadPublicPhotos() {
     this.isLoadingPhotos.set(true);
 
     try {
@@ -219,7 +223,6 @@ export class Photos implements OnInit {
       const { data, error } = await supabase
         .from('photos')
         .select('id, name, caption, image_url, storage_path, is_anonymous, created_at')
-        .eq('status', 'approved')
         .order('created_at', {
           ascending: false,
         });
@@ -234,7 +237,7 @@ export class Photos implements OnInit {
       // CREATE SIGNED URLS
       // ========================================
 
-      const photosWithUrls: ApprovedPhoto[] = [];
+      const photosWithUrls: PublicPhoto[] = [];
 
       for (const photo of photos) {
         if (photo.image_url) {
@@ -263,9 +266,9 @@ export class Photos implements OnInit {
         });
       }
 
-      this.approvedPhotos.set(photosWithUrls);
+      this.publicPhotos.set(photosWithUrls);
     } catch (error) {
-      console.error('Unable to load approved photos:', error);
+      console.error('Unable to load public photos:', error);
     } finally {
       this.isLoadingPhotos.set(false);
     }

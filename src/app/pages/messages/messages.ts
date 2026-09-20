@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { SupabaseService } from '../../core/supabase';
 
-interface ApprovedMessage {
+interface PublicMessage {
   id: string;
   name: string | null;
   message: string;
@@ -30,27 +30,26 @@ export class Messages {
   successMessage = signal('');
   errorMessage = signal('');
 
-  approvedMessages = signal<ApprovedMessage[]>([]);
+  publicMessages = signal<PublicMessage[]>([]);
 
   async ngOnInit() {
-    await this.loadApprovedMessages();
+    await this.loadPublicMessages();
   }
 
-  async loadApprovedMessages() {
+  async loadPublicMessages() {
     this.isLoadingMessages.set(true);
 
     try {
       const { data, error } = await this.supabaseService.client
         .from('church_messages')
         .select('id, name, message, is_anonymous, created_at')
-        .eq('status', 'approved')
         .order('created_at', { ascending: false });
 
       if (error) {
         throw error;
       }
 
-      this.approvedMessages.set(data ?? []);
+      this.publicMessages.set(data ?? []);
     } catch (error) {
       console.error('Unable to load church messages:', error);
     } finally {
@@ -82,7 +81,7 @@ export class Messages {
 
         is_anonymous: this.isAnonymous,
 
-        status: 'pending',
+        status: 'approved',
       });
 
       if (error) {
@@ -94,7 +93,7 @@ export class Messages {
       this.isAnonymous = true;
 
       this.successMessage.set(
-        'Thank you! Your message has been submitted and is waiting for approval.',
+        'Thank you! Your message has been shared successfully.',
       );
     } catch (error: any) {
       console.error('Unable to submit message:', error);
@@ -105,7 +104,12 @@ export class Messages {
     }
   }
 
-  displayName(item: ApprovedMessage) {
+  done() {
+    window.location.reload();
+  }
+
+  
+  displayName(item: PublicMessage) {
     if (item.is_anonymous) {
       return 'Anonymous';
     }

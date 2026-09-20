@@ -198,7 +198,7 @@
           </button>
 
           <p class="note">
-            Your photo will remain private until approved.
+            Your photo will be shared publicly after upload.
           </p>
 
         </form>
@@ -223,13 +223,13 @@
           </h2>
 
           <p>
-            Your photo has been securely submitted
-            for review.
+            Your photo has been securely uploaded
+            and shared with the church family.
           </p>
 
           <p>
-            Once approved, it may appear in our
-            anniversary photo gallery.
+            It is now visible in our anniversary
+            photo gallery.
           </p>
 
           <button
@@ -238,6 +238,14 @@
             (click)="uploadAnother()"
           >
             Upload Another Photo
+          </button>
+
+          <button
+            type="button"
+            class="done-button"
+            (click)="done()"
+          >
+            Done
           </button>
 
         </div>
@@ -288,7 +296,7 @@
 
     @if (
       !isLoadingPhotos() &&
-      approvedPhotos().length === 0
+      publicPhotos().length === 0
     ) {
 
       <div class="empty-gallery">
@@ -313,13 +321,13 @@
 
     @if (
       !isLoadingPhotos() &&
-      approvedPhotos().length > 0
+      publicPhotos().length > 0
     ) {
 
       <div class="photo-grid">
 
         @for (
-          photo of approvedPhotos();
+          photo of publicPhotos();
           track photo.id
         ) {
 
@@ -388,22 +396,4 @@
     </strong>
 
   </section>
-
-
-  <footer class="footer">
-
-    <div>
-      <strong>LGMI Balbalungao</strong>
-
-      <span>
-        Celebrating 35 Years of God's Faithfulness
-      </span>
-    </div>
-
-    <span>
-      © 2026 LGMI Balbalungao
-    </span>
-
-  </footer>
-
 </div>

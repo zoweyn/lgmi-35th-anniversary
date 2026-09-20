@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { Navbar } from './shared/navbar/navbar';
 
 @Component({
@@ -7,10 +7,10 @@ import { Navbar } from './shared/navbar/navbar';
   standalone: true,
   imports: [
     RouterOutlet,
+    RouterLink,
     Navbar
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
-}
+export class App {}

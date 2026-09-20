@@ -54,64 +54,6 @@
   }
 
 
-  <!-- FILTERS -->
-
-  <section class="filters">
-
-    <button
-      type="button"
-      class="filter-button"
-      [class.active]="selectedFilter() === 'all'"
-      (click)="setFilter('all')"
-    >
-      All
-      <span>
-        {{ getCount('all') }}
-      </span>
-    </button>
-
-
-    <button
-      type="button"
-      class="filter-button"
-      [class.active]="selectedFilter() === 'pending'"
-      (click)="setFilter('pending')"
-    >
-      Pending
-      <span>
-        {{ getCount('pending') }}
-      </span>
-    </button>
-
-
-    <button
-      type="button"
-      class="filter-button"
-      [class.active]="selectedFilter() === 'approved'"
-      (click)="setFilter('approved')"
-    >
-      Approved
-      <span>
-        {{ getCount('approved') }}
-      </span>
-    </button>
-
-
-    <button
-      type="button"
-      class="filter-button"
-      [class.active]="selectedFilter() === 'rejected'"
-      (click)="setFilter('rejected')"
-    >
-      Rejected
-      <span>
-        {{ getCount('rejected') }}
-      </span>
-    </button>
-
-  </section>
-
-
   <!-- LOADING -->
 
   @if (isLoading()) {
@@ -132,7 +74,7 @@
   <!-- EMPTY -->
 
   @else if (
-    filteredMessages().length === 0
+    messages().length === 0
   ) {
 
     <div class="empty">
@@ -161,7 +103,7 @@
     <section class="message-list">
 
       @for (
-        item of filteredMessages();
+        item of messages();
         track item.id
       ) {
 
@@ -194,15 +136,6 @@
             </div>
 
 
-            <span
-              class="status"
-              [class.pending]="item.status === 'pending'"
-              [class.approved]="item.status === 'approved'"
-              [class.rejected]="item.status === 'rejected'"
-            >
-              {{ item.status }}
-            </span>
-
           </div>
 
 
@@ -221,48 +154,9 @@
 
           <div class="actions">
 
-            @if (
-              item.status !== 'approved'
-            ) {
-
-              <button
-                type="button"
-                class="approve"
-                [disabled]="isUpdating() === item.id"
-                (click)="updateStatus(item.id, 'approved')"
-              >
-                @if (
-                  isUpdating() === item.id
-                ) {
-                  Processing...
-                } @else {
-                  ✓ Approve
-                }
-              </button>
-
-            }
-
-
-            @if (
-              item.status !== 'rejected'
-            ) {
-
-              <button
-                type="button"
-                class="reject"
-                [disabled]="isUpdating() === item.id"
-                (click)="updateStatus(item.id, 'rejected')"
-              >
-                ✕ Reject
-              </button>
-
-            }
-
-
             <button
               type="button"
               class="delete"
-              [disabled]="isUpdating() === item.id"
               (click)="deleteMessage(item.id)"
             >
               🗑 Delete

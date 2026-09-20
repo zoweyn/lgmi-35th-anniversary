@@ -148,7 +148,11 @@
         @if (successMessage()) {
 
           <div class="alert success">
-            ✓ {{ successMessage() }}
+            <span>✓ {{ successMessage() }}</span>
+
+            <button type="button" class="done-button" (click)="done()">
+              Done
+            </button>
           </div>
 
         }
@@ -228,7 +232,7 @@
       }
 
       @else if (
-        approvedMessages().length === 0
+        publicMessages().length === 0
       ) {
 
         <div class="empty">
@@ -255,7 +259,7 @@
         <div class="message-grid">
 
           @for (
-            item of approvedMessages();
+            item of publicMessages();
             track item.id
           ) {
 
@@ -304,20 +308,4 @@
     </section>
 
   </main>
-
-
-  <!-- FOOTER -->
-
-  <footer class="footer">
-
-    <p>
-      LGMI Balbalungao · 35th Anniversary
-    </p>
-
-    <span>
-      November 22, 2026 · 8:00 AM
-    </span>
-
-  </footer>
-
 </div>

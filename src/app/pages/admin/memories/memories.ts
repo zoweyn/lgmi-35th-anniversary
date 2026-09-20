@@ -1,4 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal
+} from '@angular/core';
+
 import { SupabaseService } from '../../../core/supabase';
 
 interface Memory {
@@ -6,7 +11,6 @@ interface Memory {
   name: string | null;
   message: string;
   is_anonymous: boolean;
-  status: 'pending' | 'approved' | 'rejected';
   created_at: string;
   updated_at: string;
 }
@@ -19,19 +23,23 @@ interface Memory {
 })
 export class AdminMemories {
 
-  private readonly supabaseService = inject(SupabaseService);
+  private readonly supabaseService =
+    inject(SupabaseService);
 
-  memories = signal<Memory[]>([]);
+  memories =
+    signal<Memory[]>([]);
 
-  isLoading = signal(true);
-  isUpdating = signal<string | null>(null);
+  isLoading =
+    signal(true);
 
-  errorMessage = signal('');
-  successMessage = signal('');
+  isDeleting =
+    signal<string | null>(null);
 
-  selectedFilter = signal<
-    'all' | 'pending' | 'approved' | 'rejected'
-  >('all');
+  errorMessage =
+    signal('');
+
+  successMessage =
+    signal('');
 
 
   async ngOnInit() {
@@ -46,20 +54,24 @@ export class AdminMemories {
 
     try {
 
-      const supabase = this.supabaseService.client;
-
-      const { data, error } = await supabase
-        .from('memories')
-        .select('*')
-        .order('created_at', {
-          ascending: false
-        });
+      const { data, error } =
+        await this.supabaseService.client
+          .from('memories')
+          .select('*')
+          .order(
+            'created_at',
+            {
+              ascending: false
+            }
+          );
 
       if (error) {
         throw error;
       }
 
-      this.memories.set(data ?? []);
+      this.memories.set(
+        data ?? []
+      );
 
     } catch (error: any) {
 
@@ -81,92 +93,6 @@ export class AdminMemories {
   }
 
 
-  setFilter(
-    filter: 'all' | 'pending' | 'approved' | 'rejected'
-  ) {
-
-    this.selectedFilter.set(filter);
-
-  }
-
-
-  filteredMemories() {
-
-    const filter = this.selectedFilter();
-
-    if (filter === 'all') {
-      return this.memories();
-    }
-
-    return this.memories().filter(
-      memory => memory.status === filter
-    );
-  }
-
-
-  async updateStatus(
-    id: string,
-    status: 'approved' | 'rejected'
-  ) {
-
-    this.isUpdating.set(id);
-
-    this.errorMessage.set('');
-    this.successMessage.set('');
-
-    try {
-
-      const { error } =
-        await this.supabaseService.client
-          .from('memories')
-          .update({
-            status,
-            updated_at: new Date().toISOString()
-          })
-          .eq('id', id);
-
-      if (error) {
-        throw error;
-      }
-
-      this.memories.update(
-        memories =>
-          memories.map(memory =>
-            memory.id === id
-              ? {
-                  ...memory,
-                  status
-                }
-              : memory
-          )
-      );
-
-      this.successMessage.set(
-        status === 'approved'
-          ? 'Memory approved successfully.'
-          : 'Memory rejected successfully.'
-      );
-
-    } catch (error: any) {
-
-      console.error(
-        'Unable to update memory:',
-        error
-      );
-
-      this.errorMessage.set(
-        error?.message ??
-        'Unable to update memory.'
-      );
-
-    } finally {
-
-      this.isUpdating.set(null);
-
-    }
-  }
-
-
   async deleteMemory(id: string) {
 
     const confirmed =
@@ -178,7 +104,7 @@ export class AdminMemories {
       return;
     }
 
-    this.isUpdating.set(id);
+    this.isDeleting.set(id);
 
     this.errorMessage.set('');
     this.successMessage.set('');
@@ -198,7 +124,8 @@ export class AdminMemories {
       this.memories.update(
         memories =>
           memories.filter(
-            memory => memory.id !== id
+            memory =>
+              memory.id !== id
           )
       );
 
@@ -220,9 +147,22 @@ export class AdminMemories {
 
     } finally {
 
-      this.isUpdating.set(null);
+      this.isDeleting.set(null);
 
     }
+  }
+
+
+  displayName(memory: Memory) {
+
+    if (memory.is_anonymous) {
+      return 'Anonymous';
+    }
+
+    return (
+      memory.name?.trim() ??
+      'Anonymous'
+    );
   }
 
 
@@ -234,7 +174,9 @@ export class AdminMemories {
         dateStyle: 'medium',
         timeStyle: 'short'
       }
-    ).format(new Date(date));
+    ).format(
+      new Date(date)
+    );
 
   }
 

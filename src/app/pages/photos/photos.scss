@@ -371,6 +371,22 @@
   cursor: pointer;
 }
 
+.done-button {
+  margin-top: 15px;
+  margin-left: 8px;
+  padding: 12px 24px;
+  border: 1px solid #c99a32;
+  background: #c99a32;
+  color: #102d4d;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.done-button:hover {
+  background: #e8c879;
+}
+
 
 /* GALLERY */
 

@@ -47,12 +47,6 @@
         <span class="nav-icon">♡</span>
         <span>Memories</span>
 
-        @if (pendingCount() > 0) {
-          <span class="nav-badge">
-            {{ pendingCount() }}
-          </span>
-        }
-
       </a>
 
 
@@ -239,32 +233,6 @@
       </a>
 
 
-      <!-- PENDING -->
-
-      <div class="stat-card pending-card">
-
-        <div class="stat-icon pending-icon">
-          !
-        </div>
-
-        <div class="stat-info">
-
-          <span>
-            Pending Review
-          </span>
-
-          @if (isLoading()) {
-            <strong>—</strong>
-          } @else {
-            <strong>
-              {{ pendingCount() }}
-            </strong>
-          }
-
-        </div>
-
-      </div>
-
     </section>
 
 
@@ -304,8 +272,8 @@
             </h3>
 
             <p>
-              Read and approve memories
-              submitted by the church community.
+              Read memories shared
+              by the church community.
             </p>
           </div>
 
@@ -331,8 +299,8 @@
             </h3>
 
             <p>
-              Check submitted photos before
-              displaying them in the gallery.
+              Browse photos shared
+              by the church community.
             </p>
           </div>
 

@@ -269,11 +269,32 @@ textarea:focus {
 }
 
 .alert.success {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
   background: #eaf7ee;
 
   border: 1px solid #c6e6cf;
 
   color: #267343;
+}
+
+.done-button {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border: 1px solid #267343;
+  border-radius: 4px;
+  background: #267343;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.done-button:hover {
+  background: #1d5b35;
 }
 
 .alert.error {
