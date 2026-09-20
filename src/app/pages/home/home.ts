@@ -1,7 +1,7 @@
 import { Component, DestroyRef, afterNextRender, inject, signal } from '@angular/core';
 
 import { RouterLink, RouterLinkActive } from '@angular/router';
-
+import { QrCode } from '../../shared/qr-code/qr-code';
 
 
 interface Countdown {
@@ -14,7 +14,7 @@ interface Countdown {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, QrCode],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
