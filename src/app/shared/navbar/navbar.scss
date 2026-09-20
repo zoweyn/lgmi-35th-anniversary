@@ -1,0 +1,501 @@
+/* =========================================================
+   LGMI SHARED NAVBAR
+   Consistent across all public pages
+   ========================================================= */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  width: 100%;
+
+  background: rgba(255, 255, 255, 0.97);
+  border-bottom: 1px solid rgba(228, 232, 236, 0.9);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.nav-container {
+  width: min(1240px, calc(100% - 40px));
+  min-height: 72px;
+
+  margin-inline: auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 24px;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-right: auto;
+
+  color: #0b2947;
+  text-decoration: none;
+
+  flex-shrink: 0;
+}
+
+.brand-logo {
+  width: 48px;
+  height: 48px;
+
+  object-fit: contain;
+
+  border-radius: 50%;
+
+  display: block;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.brand-text strong {
+  font-family: Georgia, 'Times New Roman', serif;
+
+  font-size: 18px;
+  line-height: 1.1;
+
+  color: #0b2947;
+
+  white-space: nowrap;
+}
+
+.brand-text span {
+  color: #c9972b;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   DESKTOP NAVIGATION
+   ========================================================= */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+}
+
+.nav-links a {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 72px;
+
+  padding: 0 12px;
+
+  color: #526171;
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition:
+    color 180ms ease;
+}
+
+
+/* underline */
+
+.nav-links a::after {
+  content: '';
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  bottom: 14px;
+
+  height: 2px;
+
+  background: #c9972b;
+
+  transform: scaleX(0);
+
+  transform-origin: center;
+
+  transition:
+    transform 180ms ease;
+}
+
+
+/* hover */
+
+.nav-links a:hover {
+  color: #0b2947;
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
+}
+
+
+/* active page */
+
+.nav-links a.active {
+  color: #0b2947;
+}
+
+.nav-links a.active::after {
+  transform: scaleX(1);
+}
+
+.nav-links a:focus-visible,
+.brand:focus-visible,
+.nav-button:focus-visible,
+.menu-button:focus-visible,
+.mobile-nav-links a:focus-visible {
+  outline: 3px solid rgba(201, 151, 43, 0.55);
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   SHARE BUTTON
+   ========================================================= */
+
+.nav-button {
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 48px;
+
+  padding: 0 20px;
+
+  border-radius: 999px;
+
+  background: #0b2947;
+  color: #ffffff;
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.nav-button:hover {
+  transform: translateY(-2px);
+
+  background: #123b61;
+
+  box-shadow:
+    0 8px 20px rgba(7, 26, 45, 0.18);
+}
+
+
+/* =========================================================
+   MOBILE MENU BUTTON
+   ========================================================= */
+
+.menu-button {
+  display: none;
+
+  width: 44px;
+  height: 44px;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.menu-button span {
+  display: block;
+
+  width: 21px;
+  height: 2px;
+
+  border-radius: 999px;
+
+  background: #0b2947;
+
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+.menu-button:hover {
+  background: #f5f1e8;
+}
+
+
+/* =========================================================
+   MOBILE NAVIGATION
+   ========================================================= */
+
+.mobile-navigation {
+  display: none;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+
+  .nav-container {
+    width: min(100% - 32px, 1280px);
+
+    gap: 22px;
+  }
+
+  .nav-links {
+    gap: 20px;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+  }
+
+  .nav-button {
+    padding-inline: 16px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 820px) {
+
+  .nav-container {
+    min-height: 68px;
+
+    width: calc(100% - 28px);
+
+    gap: 12px;
+  }
+
+  .brand-logo {
+    width: 44px;
+    height: 44px;
+  }
+
+  .brand-text strong {
+    font-size: 16px;
+  }
+
+  .brand-text span {
+    font-size: 9px;
+  }
+
+  .nav-links,
+  .nav-button {
+    display: none;
+  }
+
+  .menu-button {
+    display: flex;
+    margin-left: auto;
+  }
+
+
+  /* mobile dropdown */
+
+  .mobile-navigation {
+    display: grid;
+
+    grid-template-rows: 0fr;
+
+    background: rgba(255, 255, 255, 0.98);
+
+    border-top: 1px solid transparent;
+
+    overflow: hidden;
+
+    transition:
+      grid-template-rows 220ms ease,
+      border-color 220ms ease;
+  }
+
+  .mobile-navigation.open {
+    grid-template-rows: 1fr;
+
+    border-top-color: #e5e8ec;
+    box-shadow: 0 14px 24px rgba(7, 26, 45, 0.08);
+  }
+
+  .mobile-nav-links {
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 0 20px;
+
+    overflow: hidden;
+  }
+
+  .mobile-nav-links a {
+    position: relative;
+
+    padding: 14px 12px;
+
+    color: #526171;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    border-bottom: 1px solid #edf0f3;
+
+    transition:
+      color 180ms ease,
+      padding-left 180ms ease;
+  }
+
+  .mobile-nav-links a:hover,
+  .mobile-nav-links a.active {
+    color: #0b2947;
+    padding-left: 18px;
+  }
+
+  .mobile-nav-links a.active::before {
+    content: '';
+
+    position: absolute;
+
+    left: 0;
+    top: 50%;
+
+    width: 3px;
+    height: 20px;
+
+    transform: translateY(-50%);
+
+    background: #c9972b;
+
+    border-radius: 999px;
+  }
+
+  .mobile-share {
+    margin: 16px 0;
+
+    padding: 13px 18px !important;
+
+    border: 0 !important;
+    border-radius: 999px;
+
+    background: #0b2947;
+
+    color: #ffffff !important;
+
+    text-align: center;
+  }
+
+  .mobile-share:hover {
+    background: #123b61;
+
+    padding-left: 18px !important;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .nav-container {
+    width: calc(100% - 20px);
+  }
+
+  .brand {
+    gap: 9px;
+  }
+
+  .brand-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-text strong {
+    font-size: 15px;
+  }
+
+  .brand-text span {
+    font-size: 8px;
+
+    letter-spacing: 0.12em;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .nav-links a,
+  .nav-links a::after,
+  .nav-button,
+  .menu-button span,
+  .mobile-navigation,
+  .mobile-nav-links a {
+    transition: none;
+  }
+}

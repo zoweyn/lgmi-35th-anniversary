@@ -1,0 +1,164 @@
+<header class="navbar">
+
+  <div class="nav-container">
+
+    <!-- BRAND -->
+    <a
+      routerLink="/"
+      class="brand"
+      (click)="closeMobileMenu()"
+      aria-label="LGMI Balbalungao 35th Anniversary home"
+    >
+
+      <img
+        src="/images/lgmi-logo.png"
+        alt="Living Gospel Ministries Inc. logo"
+        class="brand-logo"
+      />
+
+      <div class="brand-text">
+        <strong>LGMI Balbalungao</strong>
+        <span>35th Anniversary</span>
+      </div>
+
+    </a>
+
+
+    <!-- DESKTOP NAVIGATION -->
+    <nav
+      class="nav-links"
+      aria-label="Main navigation"
+    >
+
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Home
+      </a>
+
+      <a
+        routerLink="/story"
+        routerLinkActive="active"
+      >
+        Our Story
+      </a>
+
+      <a
+        routerLink="/memories"
+        routerLinkActive="active"
+      >
+        Memories
+      </a>
+
+      <a
+        routerLink="/photos"
+        routerLinkActive="active"
+      >
+        Photos
+      </a>
+
+      <a
+        routerLink="/messages"
+        routerLinkActive="active"
+      >
+        Messages
+      </a>
+
+    </nav>
+
+
+    <!-- DESKTOP CTA -->
+    <a
+      routerLink="/memories"
+      class="nav-button"
+    >
+      Share Your Story
+    </a>
+
+
+    <!-- MOBILE MENU BUTTON -->
+    <button
+      type="button"
+      class="menu-button"
+      (click)="toggleMobileMenu()"
+      [class.open]="mobileMenuOpen()"
+      [attr.aria-expanded]="mobileMenuOpen()"
+      aria-controls="mobile-navigation"
+      aria-label="Toggle navigation menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+
+
+  <!-- MOBILE NAVIGATION -->
+  <div
+    id="mobile-navigation"
+    class="mobile-navigation"
+    [class.open]="mobileMenuOpen()"
+  >
+
+    <nav
+      class="mobile-nav-links"
+      aria-label="Mobile navigation"
+    >
+
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeMobileMenu()"
+      >
+        Home
+      </a>
+
+      <a
+        routerLink="/story"
+        routerLinkActive="active"
+        (click)="closeMobileMenu()"
+      >
+        Our Story
+      </a>
+
+      <a
+        routerLink="/memories"
+        routerLinkActive="active"
+        (click)="closeMobileMenu()"
+      >
+        Memories
+      </a>
+
+      <a
+        routerLink="/photos"
+        routerLinkActive="active"
+        (click)="closeMobileMenu()"
+      >
+        Photos
+      </a>
+
+      <a
+        routerLink="/messages"
+        routerLinkActive="active"
+        (click)="closeMobileMenu()"
+      >
+        Messages
+      </a>
+
+      <a
+        routerLink="/memories"
+        class="mobile-share"
+        (click)="closeMobileMenu()"
+      >
+        Share Your Story
+      </a>
+
+    </nav>
+
+  </div>
+
+</header>

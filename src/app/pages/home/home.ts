@@ -1,11 +1,8 @@
-import {
-  Component,
-  DestroyRef,
-  afterNextRender,
-  inject,
-  signal
-} from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, DestroyRef, afterNextRender, inject, signal } from '@angular/core';
+
+import { RouterLink, RouterLinkActive } from '@angular/router';
+
+
 
 interface Countdown {
   days: number;
@@ -17,22 +14,23 @@ interface Countdown {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './home.html',
-  styleUrl: './home.scss'
+  styleUrl: './home.scss',
 })
 export class Home {
-  private destroyRef = inject(DestroyRef);
+  private readonly destroyRef = inject(DestroyRef);
 
   countdown = signal<Countdown>({
     days: 0,
     hours: 0,
     minutes: 0,
-    seconds: 0
+    seconds: 0,
   });
 
-  private readonly anniversaryDate =
-    new Date('2026-11-22T08:00:00+08:00');
+  mobileMenuOpen = signal(false);
+
+  private readonly anniversaryDate = new Date('2026-11-22T08:00:00+08:00');
 
   constructor() {
     afterNextRender(() => {
@@ -58,39 +56,40 @@ export class Home {
         days: 0,
         hours: 0,
         minutes: 0,
-        seconds: 0
+        seconds: 0,
       });
 
       return;
     }
 
-    const days = Math.floor(
-      difference / (1000 * 60 * 60 * 24)
-    );
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
 
-    const hours = Math.floor(
-      (difference / (1000 * 60 * 60)) % 24
-    );
+    const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
 
-    const minutes = Math.floor(
-      (difference / (1000 * 60)) % 60
-    );
+    const minutes = Math.floor((difference / (1000 * 60)) % 60);
 
-    const seconds = Math.floor(
-      (difference / 1000) % 60
-    );
+    const seconds = Math.floor((difference / 1000) % 60);
 
     this.countdown.set({
       days,
       hours,
       minutes,
-      seconds
+      seconds,
     });
   }
 
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen.update((value) => !value);
+  }
+
+  closeMobileMenu(): void {
+    this.mobileMenuOpen.set(false);
+  }
+
   scrollToStory(): void {
-    document
-      .getElementById('story-preview')
-      ?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('story-preview')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }
 }

@@ -1,12 +1,8 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  signal
-} from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+
 
 import { SupabaseService } from '../../core/supabase';
 
@@ -20,18 +16,12 @@ interface ApprovedMemory {
 
 @Component({
   selector: 'app-memories',
-  imports: [
-    FormsModule,
-    RouterLink
-  ],
+  imports: [FormsModule, RouterLink, RouterLinkActive],
   templateUrl: './memories.html',
-  styleUrl: './memories.scss'
+  styleUrl: './memories.scss',
 })
 export class Memories implements OnInit {
-
-  private readonly supabaseService =
-    inject(SupabaseService);
-
+  private readonly supabaseService = inject(SupabaseService);
 
   // ================================
   // SUBMISSION FORM
@@ -49,142 +39,91 @@ export class Memories implements OnInit {
 
   errorMessage = signal('');
 
-
   // ================================
   // PUBLIC MEMORIES
   // ================================
 
-  approvedMemories =
-    signal<ApprovedMemory[]>([]);
+  approvedMemories = signal<ApprovedMemory[]>([]);
 
-  isLoadingMemories =
-    signal(true);
-
+  isLoadingMemories = signal(true);
 
   // ================================
   // INITIALIZE
   // ================================
 
   async ngOnInit() {
-
     await this.loadApprovedMemories();
-
   }
-
 
   // ================================
   // LOAD APPROVED MEMORIES
   // ================================
 
   async loadApprovedMemories() {
-
     this.isLoadingMemories.set(true);
 
     try {
-
-      const {
-        data,
-        error
-      } = await this.supabaseService.client
+      const { data, error } = await this.supabaseService.client
         .from('memories')
-        .select(
-          'id, name, message, is_anonymous, created_at'
-        )
+        .select('id, name, message, is_anonymous, created_at')
         .eq('status', 'approved')
-        .order(
-          'created_at',
-          {
-            ascending: false
-          }
-        );
+        .order('created_at', {
+          ascending: false,
+        });
 
       if (error) {
         throw error;
       }
 
-      this.approvedMemories.set(
-        data ?? []
-      );
-
+      this.approvedMemories.set(data ?? []);
     } catch (error) {
-
-      console.error(
-        'Unable to load approved memories:',
-        error
-      );
-
+      console.error('Unable to load approved memories:', error);
     } finally {
-
       this.isLoadingMemories.set(false);
-
     }
   }
-
 
   // ================================
   // SUBMIT MEMORY
   // ================================
 
   async submitMemory() {
-
     this.errorMessage.set('');
 
-    const trimmedName =
-      this.name.trim();
+    const trimmedName = this.name.trim();
 
-    const trimmedMessage =
-      this.message.trim();
-
+    const trimmedMessage = this.message.trim();
 
     // Message required
     if (!trimmedMessage) {
-
-      this.errorMessage.set(
-        'Please write your memory before submitting.'
-      );
+      this.errorMessage.set('Please write your memory before submitting.');
 
       return;
     }
-
 
     // Minimum message length
     if (trimmedMessage.length < 10) {
-
-      this.errorMessage.set(
-        'Your memory should be at least 10 characters long.'
-      );
+      this.errorMessage.set('Your memory should be at least 10 characters long.');
 
       return;
     }
 
-
     this.isSubmitting.set(true);
 
-
     try {
+      const { error } = await this.supabaseService.client.from('memories').insert({
+        name: this.isAnonymous ? null : trimmedName || null,
 
-      const {
-        error
-      } = await this.supabaseService.client
-        .from('memories')
-        .insert({
-          name: this.isAnonymous
-            ? null
-            : trimmedName || null,
+        message: trimmedMessage,
 
-          message: trimmedMessage,
+        is_anonymous: this.isAnonymous,
 
-          is_anonymous:
-            this.isAnonymous,
-
-          status: 'pending'
-        });
-
+        status: 'pending',
+      });
 
       if (error) {
         throw error;
       }
-
 
       // Success
       this.submitted.set(true);
@@ -194,59 +133,36 @@ export class Memories implements OnInit {
       this.message = '';
 
       this.isAnonymous = true;
-
-
     } catch (error: any) {
-
-      console.error(
-        'Memory submission error:',
-        error
-      );
+      console.error('Memory submission error:', error);
 
       this.errorMessage.set(
-        error?.message ??
-        'Something went wrong while submitting your memory. Please try again.'
+        error?.message ?? 'Something went wrong while submitting your memory. Please try again.',
       );
-
     } finally {
-
       this.isSubmitting.set(false);
-
     }
-
   }
-
 
   // ================================
   // SUBMIT ANOTHER MEMORY
   // ================================
 
   submitAnother() {
-
     this.submitted.set(false);
 
     this.errorMessage.set('');
-
   }
-
 
   // ================================
   // DATE FORMAT
   // ================================
 
   formatDate(date: string) {
-
-    return new Intl.DateTimeFormat(
-      'en-PH',
-      {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric'
-      }
-    ).format(
-      new Date(date)
-    );
-
+    return new Intl.DateTimeFormat('en-PH', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    }).format(new Date(date));
   }
-
 }

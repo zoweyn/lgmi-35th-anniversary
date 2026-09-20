@@ -1,196 +1,248 @@
-<header class="navbar">
-  <div class="nav-container">
-
-    <a routerLink="/" class="brand">
-      <div class="brand-mark">35</div>
-
-      <div class="brand-text">
-        <span class="brand-name">LGMI</span>
-        <span class="brand-anniversary">35TH ANNIVERSARY</span>
-      </div>
-    </a>
-
-    <nav class="nav-links">
-      <a routerLink="/">Home</a>
-      <a routerLink="/story">Our Story</a>
-      <a routerLink="/memories">Memories</a>
-      <a routerLink="/photos">Photos</a>
-      <a routerLink="/messages">Messages</a>
-    </nav>
-
-    <a routerLink="/memories" class="nav-button">
-      Share Your Story
-    </a>
-
-  </div>
-</header>
-
-
 <main>
 
+
   <!-- HERO -->
-  <section class="hero">
+<section class="hero-modern">
 
-    <div class="hero-glow hero-glow-one"></div>
-    <div class="hero-glow hero-glow-two"></div>
+  <div class="hero-background">
+    <img
+      src="/images/lgmi-hero.webp"
+      alt="LGMI Balbalungao church family celebrating together"
+      class="hero-image"
+    />
 
-    <div class="hero-content">
+    <div class="hero-overlay"></div>
+    <div class="hero-overlay-soft"></div>
+  </div>
 
-      <div class="eyebrow">
-        <span></span>
-        LGMI BALBALUNGAO
-        <span></span>
-      </div>
+  <div class="hero-modern-content">
 
-      <p class="anniversary-label">
-        CELEBRATING
-      </p>
+    <div class="hero-topline">
+      <span></span>
+      LGMI BALBALUNGAO
+      <span></span>
+    </div>
 
-      <h1>
-        35 Years of
-        <strong>God's Faithfulness</strong>
-      </h1>
+    <div class="anniversary-badge">
+      <small>CELEBRATING</small>
+      <strong>35</strong>
+      <span>YEARS</span>
+    </div>
 
-      <p class="hero-description">
-        A celebration of God's goodness, grace, and faithfulness
-        throughout 35 years of our church family.
-      </p>
+    <p class="hero-date">
+      1991 — 2026
+    </p>
 
-      <div class="event-details">
+    <h1>
+      God's Faithfulness
+      <span>Through the Years</span>
+    </h1>
 
-        <div class="event-detail">
-          <span class="detail-icon">◈</span>
-          <div>
-            <small>DATE</small>
-            <strong>November 22, 2026</strong>
-          </div>
+    <p class="hero-description">
+      Join us as we celebrate 35 years of God's grace,
+      faithfulness, and goodness to the LGMI Balbalungao family.
+    </p>
+
+    <div class="hero-event">
+
+      <div class="hero-event-item">
+        <span class="event-icon">◷</span>
+
+        <div>
+          <small>ANNIVERSARY CELEBRATION</small>
+          <strong>November 22, 2026</strong>
         </div>
+      </div>
 
-        <div class="detail-divider"></div>
+      <div class="hero-event-divider"></div>
 
-        <div class="event-detail">
-          <span class="detail-icon">◷</span>
-          <div>
-            <small>TIME</small>
-            <strong>8:00 AM</strong>
-          </div>
+      <div class="hero-event-item">
+        <span class="event-icon">✦</span>
+
+        <div>
+          <small>STARTING AT</small>
+          <strong>8:00 AM</strong>
         </div>
-
-      </div>
-
-      <div class="hero-actions">
-        <button
-          class="primary-button"
-          (click)="scrollToStory()"
-        >
-          Discover Our Story
-          <span>→</span>
-        </button>
-
-        <a
-          routerLink="/memories"
-          class="secondary-button"
-        >
-          Share a Memory
-        </a>
       </div>
 
     </div>
 
-    <div class="hero-cross">
-      <div class="cross-vertical"></div>
-      <div class="cross-horizontal"></div>
+    <div class="hero-modern-actions">
+
+      <button
+        type="button"
+        class="hero-primary-button"
+        (click)="scrollToStory()"
+      >
+        Discover Our Story
+        <span>→</span>
+      </button>
+
+      <a
+        routerLink="/memories"
+        class="hero-secondary-button"
+      >
+        Share a Memory
+      </a>
+
     </div>
 
-    <div class="scroll-indicator">
-      <span>SCROLL TO EXPLORE</span>
-      <div class="scroll-line"></div>
-    </div>
+  </div>
 
-  </section>
+  <div class="hero-scroll">
+    <span>SCROLL TO EXPLORE</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+
+</section>
+
 
 
   <!-- COUNTDOWN -->
-  <section class="countdown-section">
+<section class="countdown-modern">
 
-    <div class="section-heading">
-      <p class="section-label">THE COUNTDOWN BEGINS</p>
+  <div class="container countdown-container">
+
+    <div class="countdown-heading">
+
+      <p class="section-label">
+        COUNTING THE DAYS
+      </p>
 
       <h2>
         Until We Celebrate
       </h2>
 
       <p>
-        November 22, 2026 · 8:00 AM
+        Our 35th Anniversary Celebration
       </p>
+
     </div>
 
-    <div class="countdown">
+    <div class="countdown-date">
+      <span>November 22, 2026</span>
+      <i></i>
+      <span>8:00 AM</span>
+    </div>
 
-      <div class="countdown-item">
-        <strong>{{ countdown().days }}</strong>
+    <div class="countdown-grid">
+
+      <div class="countdown-box">
+        <strong>
+          {{ countdown().days }}
+        </strong>
         <span>Days</span>
       </div>
 
-      <div class="countdown-separator">:</div>
+      <div class="countdown-divider">:</div>
 
-      <div class="countdown-item">
-        <strong>{{ countdown().hours.toString().padStart(2, '0') }}</strong>
+      <div class="countdown-box">
+        <strong>
+          {{ countdown().hours.toString().padStart(2, '0') }}
+        </strong>
         <span>Hours</span>
       </div>
 
-      <div class="countdown-separator">:</div>
+      <div class="countdown-divider">:</div>
 
-      <div class="countdown-item">
-        <strong>{{ countdown().minutes.toString().padStart(2, '0') }}</strong>
+      <div class="countdown-box">
+        <strong>
+          {{ countdown().minutes.toString().padStart(2, '0') }}
+        </strong>
         <span>Minutes</span>
       </div>
 
-      <div class="countdown-separator">:</div>
+      <div class="countdown-divider">:</div>
 
-      <div class="countdown-item">
-        <strong>{{ countdown().seconds.toString().padStart(2, '0') }}</strong>
+      <div class="countdown-box">
+        <strong>
+          {{ countdown().seconds.toString().padStart(2, '0') }}
+        </strong>
         <span>Seconds</span>
       </div>
 
     </div>
 
-  </section>
+  </div>
+
+</section>
 
 
+  <!-- STORY -->
   <!-- STORY PREVIEW -->
-  <section
-    id="story-preview"
-    class="story-preview"
-  >
+<section
+  id="story-preview"
+  class="journey-section"
+>
 
-    <div class="story-content">
+  <div class="container journey-container">
+
+    <div class="journey-image">
+
+      <img
+        src="images/lgmi-congregation.webp"
+        alt="LGMI Balbalungao congregation gathered together"
+      />
+
+      <div class="journey-image-caption">
+        <strong>35 YEARS</strong>
+        <span>OF GOD'S FAITHFULNESS</span>
+      </div>
+
+    </div>
+
+    <div class="journey-content">
 
       <p class="section-label">
         OUR JOURNEY
       </p>
 
       <h2>
-        35 Years of
-        <span>Faithfulness</span>
+        A Story Written
+        <span>by Faith</span>
       </h2>
 
-      <p>
-        For 35 years, God has faithfully walked with
-        our church family through seasons of growth,
-        challenges, victories, worship, fellowship,
-        and countless memories.
+      <div class="journey-rule"></div>
+
+      <p class="journey-lead">
+        For 35 years, God has faithfully walked
+        with the LGMI Balbalungao church family.
       </p>
 
       <p>
-        As we look back at where God has brought us,
-        we also look forward with faith to what He
-        has prepared for the years ahead.
+        Through seasons of growth, challenges,
+        victories, worship, fellowship, and
+        countless memories, God's grace has
+        remained constant.
       </p>
+
+      <p>
+        As we look back with grateful hearts,
+        we also look forward with faith to
+        what God has prepared for the years ahead.
+      </p>
+
+      <div class="journey-timeline">
+
+        <div class="journey-year">
+          <strong>1991</strong>
+          <span>The Beginning</span>
+        </div>
+
+        <div class="journey-line">
+          <span></span>
+        </div>
+
+        <div class="journey-year">
+          <strong>2026</strong>
+          <span>35 Years</span>
+        </div>
+
+      </div>
 
       <a
         routerLink="/story"
-        class="text-link"
+        class="journey-link"
       >
         Explore Our Story
         <span>→</span>
@@ -198,61 +250,40 @@
 
     </div>
 
-    <div class="timeline-card">
+  </div>
 
-      <div class="timeline-year start">
-        <strong>1991</strong>
-        <span>THE BEGINNING</span>
-      </div>
+</section>
 
-      <div class="timeline-line">
-        <span></span>
-      </div>
-
-      <div class="timeline-year end">
-        <strong>2026</strong>
-        <span>35 YEARS</span>
-      </div>
-
-      <div class="timeline-caption">
-        <span>✦</span>
-        ONE GOD · ONE FAMILY · ONE FAITH
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- MEMORY SECTION -->
+  <!-- MEMORY CTA -->
   <section class="memory-section">
 
-    <div class="memory-inner">
+    <div class="memory-image"></div>
+    <div class="memory-overlay"></div>
 
-      <div class="memory-icon">
+    <div class="container memory-content">
+
+      <div class="memory-mark">
         ✦
       </div>
 
-      <p class="section-label light">
+      <span class="section-eyebrow light">
         YOUR STORY MATTERS
-      </p>
+      </span>
 
       <h2>
-        What is your most
-        <span>unforgettable</span>
-        church memory?
+        Every memory is part
+        <span>of our story.</span>
       </h2>
 
       <p>
-        From your first visit to the people you met,
-        the worship services you experienced, and
-        the moments that changed your life —
-        we'd love to hear your story.
+        What moment at LGMI will you always remember?
+        Share your story and help us preserve the memories
+        that shaped our church family.
       </p>
 
       <a
         routerLink="/memories"
-        class="gold-button"
+        class="button button-gold"
       >
         Share Your Memory
         <span>→</span>
@@ -263,97 +294,157 @@
   </section>
 
 
-  <!-- COMMUNITY FEATURES -->
-  <section class="features-section">
+  <!-- COMMUNITY -->
+  <section class="community-section">
 
-    <div class="section-heading">
-      <p class="section-label">BE PART OF THE CELEBRATION</p>
+    <div class="container">
 
-      <h2>
-        Remember. Share. Celebrate.
-      </h2>
+      <div class="section-heading">
 
-      <p>
-        Help us create a digital collection of
-        memories from our church family.
-      </p>
-    </div>
+        <span class="section-eyebrow">
+          BE PART OF THE CELEBRATION
+        </span>
 
-
-    <div class="features-grid">
-
-      <a
-        routerLink="/memories"
-        class="feature-card"
-      >
-        <div class="feature-number">01</div>
-
-        <div class="feature-icon">
-          ♡
-        </div>
-
-        <h3>
-          Share a Memory
-        </h3>
+        <h2>
+          Remember. Share. Celebrate.
+        </h2>
 
         <p>
-          Tell us about the moment in church
-          that you'll never forget.
+          Help us create a digital collection of
+          memories from our church family.
         </p>
 
-        <span class="feature-link">
-          Share your story →
-        </span>
-      </a>
+      </div>
 
+
+      <div class="feature-grid">
+
+        <a
+          routerLink="/memories"
+          class="feature-card"
+        >
+
+          <div class="feature-top">
+            <span class="feature-number">01</span>
+            <span class="feature-arrow">↗</span>
+          </div>
+
+          <div class="feature-icon">
+            ♡
+          </div>
+
+          <h3>
+            Share a Memory
+          </h3>
+
+          <p>
+            Tell us about a moment at church
+            that you will never forget.
+          </p>
+
+          <span class="feature-link">
+            Share your story
+            <span>→</span>
+          </span>
+
+        </a>
+
+
+        <a
+          routerLink="/photos"
+          class="feature-card"
+        >
+
+          <div class="feature-top">
+            <span class="feature-number">02</span>
+            <span class="feature-arrow">↗</span>
+          </div>
+
+          <div class="feature-icon">
+            ▣
+          </div>
+
+          <h3>
+            Add a Photo
+          </h3>
+
+          <p>
+            Share a favorite church photo
+            and help preserve our memories.
+          </p>
+
+          <span class="feature-link">
+            Visit photo wall
+            <span>→</span>
+          </span>
+
+        </a>
+
+
+        <a
+          routerLink="/messages"
+          class="feature-card"
+        >
+
+          <div class="feature-top">
+            <span class="feature-number">03</span>
+            <span class="feature-arrow">↗</span>
+          </div>
+
+          <div class="feature-icon">
+            ✉
+          </div>
+
+          <h3>
+            Message the Church
+          </h3>
+
+          <p>
+            Leave a special greeting, prayer,
+            or thanksgiving for our church family.
+          </p>
+
+          <span class="feature-link">
+            Leave a message
+            <span>→</span>
+          </span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PHOTO STRIP -->
+  <section class="photo-strip">
+
+    <div class="photo-strip-image">
+      <img
+        src="images/lgmi-photo-collage.webp"
+        alt="LGMI Balbalungao church memories"
+      />
+    </div>
+
+    <div class="photo-strip-content">
+
+      <span class="section-eyebrow light">
+        MEMORIES WE HOLD DEAR
+      </span>
+
+      <h2>
+        One family.
+        <span>One faith.</span>
+      </h2>
 
       <a
         routerLink="/photos"
-        class="feature-card"
+        class="light-link"
       >
-        <div class="feature-number">02</div>
-
-        <div class="feature-icon">
-          ▣
-        </div>
-
-        <h3>
-          Add a Photo
-        </h3>
-
-        <p>
-          Share your favorite church photos
-          and help preserve our memories.
-        </p>
-
-        <span class="feature-link">
-          Visit photo wall →
-        </span>
-      </a>
-
-
-      <a
-        routerLink="/messages"
-        class="feature-card"
-      >
-        <div class="feature-number">03</div>
-
-        <div class="feature-icon">
-          ✉
-        </div>
-
-        <h3>
-          Message the Church
-        </h3>
-
-        <p>
-          Leave a special message for our
-          church family on this celebration.
-        </p>
-
-        <span class="feature-link">
-          Leave a message →
-        </span>
+        View the Photo Wall
+        <span>→</span>
       </a>
 
     </div>
@@ -364,22 +455,25 @@
   <!-- CLOSING -->
   <section class="closing-section">
 
-    <div class="closing-cross">
-      ✦
+    <div class="closing-logo">
+      <img
+        src="images/lgmi-logo.png"
+        alt="LGMI Balbalungao logo"
+      />
     </div>
 
-    <p class="section-label">
+    <span class="section-eyebrow">
       NOVEMBER 22, 2026
-    </p>
+    </span>
 
     <h2>
       Great is Thy
-      <span>Faithfulness</span>
+      <span>Faithfulness.</span>
     </h2>
 
     <p>
-      35 years behind us.
-      God's faithfulness throughout.
+      35 years behind us.<br />
+      God's faithfulness throughout.<br />
       A future ahead of us.
     </p>
 
@@ -396,17 +490,31 @@
 
 <footer class="footer">
 
-  <div class="footer-brand">
-    <strong>LGMI</strong>
-    <span>35TH ANNIVERSARY</span>
+  <div class="container footer-inner">
+
+    <a
+      routerLink="/"
+      class="footer-brand"
+    >
+      <img
+        src="images/lgmi-logo.png"
+        alt=""
+      />
+
+      <div>
+        <strong>LGMI Balbalungao</strong>
+        <span>35th Anniversary</span>
+      </div>
+    </a>
+
+    <p>
+      Celebrating 35 years of God's faithfulness.
+    </p>
+
+    <span class="footer-year">
+      © 2026 LGMI Balbalungao
+    </span>
+
   </div>
-
-  <p>
-    Celebrating 35 years of God's faithfulness.
-  </p>
-
-  <span class="footer-year">
-    © 2026 LGMI Balbalungao
-  </span>
 
 </footer>
